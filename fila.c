@@ -27,7 +27,7 @@ struct fila_t *fila_cria() {
 
 /* retorna uma fila vazia, com todos os elementos e estruturas destruidos */
 struct fila_t *fila_destroi(struct fila_t *f) {
-	if (f == NULL && f->tam == 0){
+	if (f == NULL){
 		return NULL;
 	}
 	struct fila_nodo_t *aux_atual = f->ini;
@@ -36,6 +36,7 @@ struct fila_t *fila_destroi(struct fila_t *f) {
 		aux_prox = aux_atual->prox;
 		free(aux_atual);
 		aux_atual = aux_prox;
+		(f->num)--;
 	}
 	free(f);
 	f = NULL;
@@ -45,31 +46,37 @@ struct fila_t *fila_destroi(struct fila_t *f) {
 /* insere um elemento no fim da fila */
 int fila_insere(struct fila_t *f, int item){
 	struct fila_nodo_t *nodo = malloc(sizeof(struct fila_nodo_t);
-	if (!nodo)
+	if (!(f) || !(nodo))
 		return 0;
 	nodo->item = item;
 	nodo->prox = NULL;
-	f->ult->prox = nodo;
+	if (f->num == 0)
+		f->ini = nodo
+	else
+		f->ult->prox = nodo;
 	f->num++;
 	return 1;
 }
 
 /* retira um elemento do fim da fila, por ordem de chegada */
 int fila_retira(struct fila_t *f, int *item){
-	if (f == NULL || f->num == 0)
+	if (!(f) || !(item) || f->num == 0)
 		return 0;
 	*item = f->ini->item;
 	struct fila_nodo_t *aux = f->ini;
        	f->ini = aux->prox;
 	free(aux);
 	f->num--;
+
+	if (f->prim == NULL)
+		f->ult == NULL;
 	return 1;
 }
 
 /* retorna o tamanho da fila */
 int fila_tamanho(struct fila_t *f){
 	if (f == NULL)
-		return 0;
+		return -1;
 	return f->num;
 }
 
