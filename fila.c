@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "fila.h"
 
 /* descricao do elemento da fila */
 struct fila_nodo_t {
