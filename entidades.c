@@ -28,7 +28,7 @@ struct missao_t{
     struct coord_t local; /* coordenadas X e Y da missao */
 };
 
-struct world{
+struct mundo_t{
     int qtd_h; /* qtd total de herois no mundo */
     struct heroi_t *vet_h; /* vetor de herois */
     int qtd_b; /* qtd total de bases no mundo */
@@ -114,6 +114,66 @@ struct missao_t *destroi_missao(struct missao_t *m){
         return NULL;
     if (m->skills)
         cjto_destroi(m->skills);
+    free(m);
+    return NULL;
+}
+
+struct mundo_t *cria_mundo(){
+    struct mundo_t *w = malloc(sizeof(struct mundo_t));
+    if (!w)
+        return NULL;
+    w->qtd_h = QTD_H;
+
+    for (int i = 0; i < w->qtd_h; i++){
+        w->vet_h[i] = cria_heroi(i);
+        if (!w->vet_h[i]){
+            destroi_mundo(w);
+            return NULL;
+        }
+    }
+    w->qtd_b = QTD_B;
+
+    for (int i = 0; i < w->qtd_b; i++){
+        w->vet_b[i] = cria_base(i);
+        if (!w->vet_b[i]){
+            destroi_mundo(w);
+            return NULL;
+        }
+    }
+
+    w->qtd_m = QTD_M;
+
+    for (int i = 0; i < w->qtd_m; i++){
+        w->vet_m[i] = cria_missao(i);
+        if (!w->vet_m[i]){
+            destroi_mundo(w);
+            return NULL;
+        }
+    }
+    
+    w->qtd_s = QTD_S;
+    w->qtd_v = QTD_V;
+    w->tam_m = cria_coordenada(TAM_M, TAM_M);
+    w->tempo = TEMPO_INI;
+    
+    return w;
+}
+
+struct mundo_t *destroi_mundo(struct mundo_t *w){
+    if (!w)
+        return NULL;
+    for (int i = 0; i < w->qtd_h; i++){
+        destroi_heroi(w->vet_h[i]);        
+    }
+
+    for (int i = 0; i < w->qtd_b; i++){
+        destroi_base(w->vet_b[i]);
+    }
+
+    for (int i = 0; i < w->qtd_m; i++){
+        destroi_missao(w->vet_m[i]);
+    }
+
     free(m);
     return NULL;
 }
