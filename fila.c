@@ -39,7 +39,6 @@ struct fila_t *fila_destroi(struct fila_t *f) {
 		(f->num)--;
 	}
 	free(f);
-	f = NULL;
 	return NULL;
 };
 
