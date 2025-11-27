@@ -18,7 +18,7 @@ struct base_t{
     int id_b; /* numero de identificacao dessa base */ 
     int limite; /* capacidade maxima suportada por essa base */
     struct cjto_t *presentes; /* conjunto de herois que essa base tem */
-    struct lista_t *espera; /* fila de herois na lista de espera */
+    struct fila_t *espera; /* fila de herois na lista de espera */
     struct coord_t local; /* coordenadas X e Y da base */ 
 };
 
@@ -78,7 +78,7 @@ struct base_t *cria_base(int id_b){
     b->id_b = id_b;
     b->limite = 
     b->presentes =
-    b->espera = lista_cria();
+    b->espera = fila_cria();
     b->local.x = 
     b->local.y = 
     ...
