@@ -1,32 +1,53 @@
-#ifndef THEBOYS
-#define THEBOYS
+#include "fprio.h"
+#include "conjunto.h"
 
-/* entidades da simulacao */
-struct heroi;
-struct base;
-struct missao;
-struct mundo;
+struct heroi_t{
+    int id_heroi; /* id do heroi */
+    struct cjto_t *skills; /* struct contendo o conjunto de habilidades do heroi */
+    int paciencia; /* valor inteiro que representa a paciencia do heroi */
+    int speed; /* valor inteiro que representa a velocidade do heroi */
+    int exp; /* valor inteiro que representa a experiencia do heroi */
+    int id_base; /* id da base em que o heroi se encontra atualmente */
+};
 
-/* eventos que causarao as mudancas de estado na simulacao discreta */
+struct base_t{
+    int id_base; /* numero de identificacao dessa base */ 
+    int limite; /* capacidade maxima suportada por essa base */
+    struct cjto_t *presentes; /* quantos herois essa base tem */
+    struct lista_t *espera; /* fila de herois na lista de espera */
+    struct coord_t *local; /* coordenadas X e Y da base */ 
+};
 
-/* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
-void chega(int tempo, struct heroi, struct base);
+struct missao_t{
+    int id_missao; /* id dessa missao */
+    struct cjto_t *skills /* habilidades requeridas para participar dessa missao */
+    struct coord_t *local; /* coordenadas X e Y da missao */
+};
 
-/* nesse evento, o heroi entra na determinada fila de espera */
-void espera(int tempo, struct heroi, struct base);
+struct world{
+    int num_h; /* qtd total de herois no mundo */
+    struct heroi_t *vet_h; /* vetor de herois */
+    int num_b; /* qtd total de bases no mundo */
+    struct base_t *vet_b; /* vetor de bases */
+    int num_m; /* qtd total de missoes no mundo */
+    struct missao_t *vet_m; /* vetor de missoes */
+    int num_s /* qtd total de habilidades no mundo */
+    int num_v /* qtd de compostos V disponiveis */
+    struct coord_t tam_m /* tamanho maximo do mundo. nao precisa ser alocado porque eh constante. 1 unidade = 1 metro real */
+    int tempo /* tempo atual desse mundo. 1 unidade = 1 minuto real */
+}
 
-/* eh usado quando um heroi desiste de esperar para entrar em uma base, e em seguida esse heroi viaja para uma base aleatoria D */
-void desiste(int tempo, struct heroi, struct base);
+/* aqui, vou colocar as structs que criam e destroem cada uma das entidades */
+struct heroi_t *cria_heroi(int id_heroi);
 
-/* o porteiro da dada base eh avisado e verifica a fila de espera */
-void avisa(int tempo, struct base);
+struct heroi_t *destroi_heroi(struct mundo_t *heroi);
 
-/* representa a entrada do heroi na determinada base, agendando o tempo que vai permanecer la e quando vai sair */
-void entra(int tempo, struct heroi, struct base);
+struct base_t *cria_base(int id_base);
 
-/* representa a saida do heroi da base em que estava, escolhendo uma outra base aonde viajar e avisando o porteiro de que ha uma nova vaga disponivel */
-void sai(int tempo, struct heroi, struct base);
+struct base_t *destroi_base(struct base_t *base);
 
-/* evento em que o heroi viaja para uma base D, que tambem pode ser a ma */
+struct missao_t *cria_missao();
 
+struct missao_t *destroi_missao();
 
+#endif
