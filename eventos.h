@@ -7,23 +7,13 @@
 /* eventos que causarao as mudancas de estado na simulacao discreta */
 
 /* representa um evento do tipo um, que tem tempo, heroi e base */
-struct ev_t_um{
-    int tempo;
-    int id_heroi;
-    int id_base;
-};
+struct ev_t_um();
 
 /* representa um evento que tem apenas tempo e base, como o caso do avisa */
-struct ev_t_dois{
-    int tempo;
-    int id_base;
-};
+struct ev_t_dois();
 
 /* representa um evento que usa apenas tempo e missao */
-struct ev_t_tres{
-    int tempo;
-    int id_missao;
-}
+struct ev_t_tres();
 
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
 struct *cria_evento(struct mundo_t *m, int tipo, int tempo, int info1, int info2);
