@@ -41,13 +41,13 @@ struct world{
 }
 
 /* aqui, vou colocar as structs que criam e destroem cada uma das entidades */
-struct heroi_t *cria_heroi();
+struct heroi_t *cria_heroi(int id_heroi);
 
-struct heroi_t *destroi_heroi();
+struct heroi_t *destroi_heroi(struct mundo_t *heroi);
 
-struct base_t *cria_base();
+struct base_t *cria_base(int id_base);
 
-struct base_t *destroi_base();
+struct base_t *destroi_base(struct base_t *base);
 
 struct missao_t *cria_missao();
 
