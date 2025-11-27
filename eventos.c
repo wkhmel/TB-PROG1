@@ -37,11 +37,13 @@ void chega(struct mundo_t *m, struct evento_t *ev){
     if (cjto_card(b->presentes) < (b->limite) && fila_tamanho(b->espera) == 0)
         espera = 1; /* valor logico verdadeiro */
     else espera = (h->paciencia) > (10*fila_tamanho(b->espera));
-
+    if (espera == 1)
+        espera(
 }
 
 /* representa a entrada do heroi na fila de espera */
-void espera(struct mundo_t *m, struct evento_t *ev);
+void espera(struct mundo_t *m, struct evento_t *ev){
+    
 
 /* representa a desistencia de um heroi em esperar para entrar em uma base, e em seguida esse heroi viaja para uma base aleatoria D */
 void desiste(struct mundo_t *m, struct evento_t *ev);
