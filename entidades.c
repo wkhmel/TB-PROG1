@@ -35,10 +35,11 @@ struct mundo_t{
     struct base_t *vet_b; /* vetor de bases */
     int qtd_m; /* qtd total de missoes no mundo */
     struct missao_t *vet_m; /* vetor de missoes */
-    int qtd_s /* qtd total de habilidades no mundo */
-    int qtd_v /* qtd de compostos V disponiveis */
-    struct coord_t tam_m /* tamanho maximo do mundo. nao precisa ser alocado porque eh constante. 1 unidade = 1 metro real */
+    int qtd_s; /* qtd total de habilidades no mundo */
+    int qtd_v; /* qtd de compostos V disponiveis */
+    struct coord_t tam_m; /* tamanho maximo do mundo. nao precisa ser alocado porque eh constante. 1 unidade = 1 metro real */
     int tempo /* tempo atual desse mundo. 1 unidade = 1 minuto real */
+    struct fprio_t *lef;
 }
 
 /* cria um heroi. retorna o ponteiro para o heroi ou NULL em caso de erro. */
