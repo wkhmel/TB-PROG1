@@ -51,3 +51,4 @@ void fim(struct mundo_t *m);
 /* cria os primeiros eventos e agenda o fim do mundo */
 void inicio(struct mundo_t *m);
 
+#endif
