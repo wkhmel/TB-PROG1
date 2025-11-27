@@ -26,14 +26,14 @@ struct missao_t{
 };
 
 struct world{
-    int num_h; /* qtd total de herois no mundo */
+    int qtd_h; /* qtd total de herois no mundo */
     struct heroi_t *vet_h; /* vetor de herois */
-    int num_b; /* qtd total de bases no mundo */
+    int qtd_b; /* qtd total de bases no mundo */
     struct base_t *vet_b; /* vetor de bases */
-    int num_m; /* qtd total de missoes no mundo */
+    int qtd_m; /* qtd total de missoes no mundo */
     struct missao_t *vet_m; /* vetor de missoes */
-    int num_s /* qtd total de habilidades no mundo */
-    int num_v /* qtd de compostos V disponiveis */
+    int qtd_s /* qtd total de habilidades no mundo */
+    int qtd_v /* qtd de compostos V disponiveis */
     struct coord_t tam_m /* tamanho maximo do mundo. nao precisa ser alocado porque eh constante. 1 unidade = 1 metro real */
     int tempo /* tempo atual desse mundo. 1 unidade = 1 minuto real */
 }
