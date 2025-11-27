@@ -1,27 +1,28 @@
 #include "fprio.h"
 #include "conjunto.h"
+#include "fila.h"
 
 struct heroi_t{
-    int id_heroi; /* id do heroi */
+    int id_h; /* id do heroi */
     struct cjto_t *skills; /* struct contendo o conjunto de habilidades do heroi */
     int paciencia; /* valor inteiro que representa a paciencia do heroi */
     int speed; /* valor inteiro que representa a velocidade do heroi */
     int exp; /* valor inteiro que representa a experiencia do heroi */
-    int id_base; /* id da base em que o heroi se encontra atualmente */
+    int id_bh; /* id da base em que o heroi se encontra atualmente */
 };
 
 struct base_t{
-    int id_base; /* numero de identificacao dessa base */ 
+    int id_b; /* numero de identificacao dessa base */ 
     int limite; /* capacidade maxima suportada por essa base */
-    struct cjto_t *presentes; /* quantos herois essa base tem */
+    struct cjto_t *presentes; /* conjunto de herois que essa base tem */
     struct lista_t *espera; /* fila de herois na lista de espera */
-    struct coord_t *local; /* coordenadas X e Y da base */ 
+    struct coord_t local; /* coordenadas X e Y da base */ 
 };
 
 struct missao_t{
-    int id_missao; /* id dessa missao */
+    int id_m; /* id dessa missao */
     struct cjto_t *skills /* habilidades requeridas para participar dessa missao */
-    struct coord_t *local; /* coordenadas X e Y da missao */
+    struct coord_t local; /* coordenadas X e Y da missao */
 };
 
 struct world{
@@ -38,16 +39,16 @@ struct world{
 }
 
 /* aqui, vou colocar as structs que criam e destroem cada uma das entidades */
-struct heroi_t *cria_heroi(int id_heroi);
+struct heroi_t *cria_heroi(int id_h);
 
-struct heroi_t *destroi_heroi(struct mundo_t *heroi);
+struct heroi_t *destroi_heroi(struct mundo_t *h);
 
-struct base_t *cria_base(int id_base);
+struct base_t *cria_base(int id_b);
 
-struct base_t *destroi_base(struct base_t *base);
+struct base_t *destroi_base(struct base_t *b);
 
-struct missao_t *cria_missao();
+struct missao_t *cria_missao(int id_m);
 
-struct missao_t *destroi_missao();
+struct missao_t *destroi_missao(struct missao_t *m);
 
 #endif
