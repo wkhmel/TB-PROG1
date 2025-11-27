@@ -38,3 +38,79 @@ struct world{
     int tempo /* tempo atual desse mundo. 1 unidade = 1 minuto real */
 }
 
+/* cria um heroi. retorna o ponteiro para o heroi ou NULL em caso de erro. */
+struct heroi_t *cria_heroi(int id_h){
+    struct heroi_t *h = malloc(sizeof(struct heroi_t));
+    if (!h)
+        return NULL;
+    h->id_h = id_heroi;
+    h->skills =
+    h->paciencia =
+    h->speed = 
+    h->exp = 0;
+    h->id_bh = 
+    ....
+
+    return h;
+}
+
+/* funcao que destroi o heroi e todas as suas estruturas e devolve o id do heroi em um ponteiro. */
+/* retorna NULL. */
+struct heroi_t *destroi_heroi(struct heroi_t *h, int *id_h){
+    if (!h)
+        return NULL;
+    if (id_h)
+        *id_h = h->id_h;
+    if (h->skills)
+        cjto_destroi(h->skills);
+    free(h);
+    return NULL;
+}
+
+struct base_t *cria_base(int id_b){
+    struct base_t *b = malloc(sizeof(struct base_t));
+    if (!b)
+        return NULL;
+    b->id_b = id_b;
+    b->limite = 
+    b->presentes =
+    b->espera = lista_cria();
+    b->local.x = 
+    b->local.y = 
+    ...
+    return b;
+}
+
+struct base_t *destroi_base(struct base_t *b, int *id_b){
+    if (!b)
+        return NULL;
+    if (id_b)
+        *id_b = b->id_b;
+    if (b->presentes)
+        cjto_destroi(b->presentes);
+    if (b->espera)
+        fila_destroi(b->espera);
+    free(b);
+    return NULL;
+}
+
+struct missao_t *cria_missao(int id_m){
+    struct missao_t *m = malloc(sizeof(struct missao_t));
+    if (!m)
+        return NULL;
+    m->id_m = id_m;
+    m->skills = cjto_aleat();
+    m->local.x = 
+    m->local.y =
+    ...
+    return m;
+}
+
+struct missao_t *destroi_missao(struct missao_t *m){
+    if (!m)
+        return NULL;
+    if (m->skills)
+        cjto_destroi(m->skills);
+    free(m);
+    return NULL;
+}
