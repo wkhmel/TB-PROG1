@@ -1,5 +1,15 @@
 #ifndef EVENTOS
 #define EVENTOS
+#define CHEGA 1
+#define ESPERA 2
+#define DESISTE 3
+#define AVISA 4
+#define ENTRA 5
+#define SAI 6
+#define VIAJA 7
+#define MORRE 8
+#define MISSAO 9
+#define FIM 10
 
 #include "theboys.h"
 #include "fprio.h"
