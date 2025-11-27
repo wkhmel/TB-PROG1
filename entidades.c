@@ -156,7 +156,7 @@ struct mundo_t *cria_mundo(){
     w->qtd_v = QTD_V;
     w->tam_m = cria_coordenada(TAM_M, TAM_M);
     w->tempo = TEMPO_INI;
-    
+    w->lef = fprio_cria();
     return w;
 }
 
@@ -175,6 +175,8 @@ struct mundo_t *destroi_mundo(struct mundo_t *w){
         destroi_missao(w->vet_m[i]);
     }
 
+    fprio_destroi(w->lef);
+    
     free(m);
     return NULL;
 }
