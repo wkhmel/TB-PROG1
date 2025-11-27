@@ -12,7 +12,7 @@ struct evento_t{
     int tempo;
     int tipo;
     int info1;
-    int info2;
+    int info2; 
 };
 
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
@@ -32,19 +32,23 @@ void atualiza_tempo(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef)
 }
 
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
-void chega(struct mundo_t *w, struct evento_t *ev){
+void chega(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct heroi_t *h = w->vet_h[ev->info1];
     struct base_t *b = w->vet_b[ev->info2];
     h->id_bh = b->id_b; /* atualiza a base do heroi */
     int tempo = ev->tempo;
     int espera;
     if (cjto_card(b->presentes) < (b->limite) && fila_tamanho(b->espera) == 0)
-        espera = 1; /* valor logico verdadeiro */
+        espera = 1; /* simboliza o valor logico verdadeiro, e nao a cardinalidade da fila de espera */
     else espera = (h->paciencia) > (10*fila_tamanho(b->espera));
-    if (espera == 1)
-        EVENTO ESPERA
+    struct evento_t *evento;
+    if (espera == 1){
+        evento = cria_evento(tempo, ESPERA, h->id_h, b->id_b);
+        fprio_insere(lef, evento, tipo, tempo);
+    }
     else
-        EVENTO DESISTE
+        evento = cria_evento(tempo, DESISTE, h->id_h, b->id_b);
+        fprio_insere(lef, evento, tipo, tempo);
 }
 
 /* representa a entrada do heroi na fila de espera */
@@ -52,11 +56,10 @@ void espera(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct heroi_t *h = w->vet_h[ev->info1];
     struct base_t *b = w->vet_b[ev->info2];
     int tempo = ev->tempo;
-
-    if (fila_insere(b->espera, h->id_h) == 0)
-        return;
-    if (    
-    
+    if (fila_insere(b->espera, h->id_h)){
+        struct evento_t *evento = cria_evento(tempo, AVISA, h->id_h, b->id_b);
+        fprio_insere(lef, evento, tipo, tempo);
+    }    
 }
 
 /* representa a desistencia de um heroi em esperar para entrar em uma base, e em seguida esse heroi viaja para uma base aleatoria D */
@@ -64,13 +67,15 @@ void desiste(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h = w->vet_h[ev->info1];
     struct base_t *b = w->vet_b[ev->info2];
     int tempo = ev->tempo;
-    int base_destino = aleat(0, w->qtd_b);
-    struct evento_t *evento = cria_evento(tempo, AVISA, h->id_h, b->id_b)
+    int base_destino = aleat(0, w->qtd_b - 1);
+    struct evento_t *evento = cria_evento(tempo, AVISA, h->id_h, b->id_b);
+    fprio_insere(lef, evento, tipo, tempo);
 }
 
 /* representa que o porteiro da dada base eh avisado e verifica a fila de espera */
 void avisa(struct mundo_t *w, struct evento_t *ev){
-    
+    for (int i = 0; i
+        
 }
 
 /* representa a entrada do heroi na determinada base, agendando o tempo que vai permanecer la e quando vai sair */
