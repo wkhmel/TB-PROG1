@@ -27,6 +27,7 @@ struct missao_t{
     int id_m; /* id dessa missao */
     struct cjto_t *skills /* habilidades requeridas para participar dessa missao */
     struct coord_t local; /* coordenadas X e Y da missao */
+    bool realizou;
 };
 
 struct mundo_t{
@@ -36,62 +37,54 @@ struct mundo_t{
     struct base_t *vet_b; /* vetor de bases */
     int qtd_m; /* qtd total de missoes no mundo */
     struct missao_t *vet_m; /* vetor de missoes */
-    int qtd_s; /* qtd total de habilidades no mundo */
+    int qtd_hab; /* qtd total de habilidades no mundo */
     int qtd_v; /* qtd de compostos V disponiveis */
     struct coord_t tam_m; /* tamanho maximo do mundo. nao precisa ser alocado porque eh constante. 1 unidade = 1 metro real */
     int tempo /* tempo atual desse mundo. 1 unidade = 1 minuto real */
-    struct fprio_t *lef;
 }
 
+
 /* cria um heroi. retorna o ponteiro para o heroi ou NULL em caso de erro. */
-struct heroi_t *cria_heroi(int id_h){
+struct heroi_t *cria_heroi(int id){
     struct heroi_t *h = malloc(sizeof(struct heroi_t));
     if (!h)
         return NULL;
-    h->id_h = id_h;
-    h->skills = N_HABILIDADES;
+    h->id_h = id;
+    h->skills = cjto_cria(aleat(1, 3), N_HABILIDADES);
     h->paciencia = aleat(0, 100);
     h->speed = aleat(50, 5000);
     h->exp = 0;
-    h->id_bh = cjto_cria(aleat(1, 3));
     h->morreu = false;
-    ....
+    
 
     return h;
 }
 
 /* funcao que destroi o heroi e todas as suas estruturas e devolve o id do heroi em um ponteiro. */
 /* retorna NULL. */
-struct heroi_t *destroi_heroi(struct heroi_t *h, int *id_h){
+struct heroi_t *destroi_heroi(struct heroi_t *h){
     if (!h)
         return NULL;
-    if (id_h)
-        *id_h = h->id_h;
     if (h->skills)
         cjto_destroi(h->skills);
     free(h);
     return NULL;
 }
 
-struct base_t *cria_base(int id_b){
+struct base_t *cria_base(int id){
     struct base_t *b = malloc(sizeof(struct base_t));
     if (!b)
         return NULL;
-    b->id_b = id_b;
-    b->limite = 
-    b->presentes =
-    b->espera = fila_cria();
-    b->local.x = 
-    b->local.y = 
-    ...
+    b->id_b = id;
+    b->limite = aleat(3, 10);
+    b->presentes = cjto_cria(); /* cria conjunto vazio */
+    b->espera = fila_cria(); /* cria fila de espera vazia */
     return b;
 }
 
-struct base_t *destroi_base(struct base_t *b, int *id_b){
+struct base_t *destroi_base(struct base_t *b){
     if (!b)
         return NULL;
-    if (id_b)
-        *id_b = b->id_b;
     if (b->presentes)
         cjto_destroi(b->presentes);
     if (b->espera)
@@ -100,15 +93,13 @@ struct base_t *destroi_base(struct base_t *b, int *id_b){
     return NULL;
 }
 
-struct missao_t *cria_missao(int id_m){
+struct missao_t *cria_missao(int id){
     struct missao_t *m = malloc(sizeof(struct missao_t));
     if (!m)
         return NULL;
-    m->id_m = id_m;
-    m->skills = cjto_aleat();
-    m->local.x = 
-    m->local.y =
-    ...
+    m->id_m = id;
+    m->skills = cjto_aleat(aleat(6,10), N_HABILIDADES);
+    m->realizou = false;
     return m;
 }
 
@@ -125,7 +116,7 @@ struct mundo_t *cria_mundo(){
     struct mundo_t *w = malloc(sizeof(struct mundo_t));
     if (!w)
         return NULL;
-    w->qtd_h = QTD_H;
+    w->qtd_h = N_HEROIS;
 
     for (int i = 0; i < w->qtd_h; i++){
         w->vet_h[i] = cria_heroi(i);
@@ -134,7 +125,7 @@ struct mundo_t *cria_mundo(){
             return NULL;
         }
     }
-    w->qtd_b = QTD_B;
+    w->qtd_b = N_BASES;
 
     for (int i = 0; i < w->qtd_b; i++){
         w->vet_b[i] = cria_base(i);
@@ -143,8 +134,7 @@ struct mundo_t *cria_mundo(){
             return NULL;
         }
     }
-
-    w->qtd_m = QTD_M;
+    w->qtd_m = N_MISSOES;
 
     for (int i = 0; i < w->qtd_m; i++){
         w->vet_m[i] = cria_missao(i);
@@ -154,10 +144,11 @@ struct mundo_t *cria_mundo(){
         }
     }
     
-    w->qtd_s = QTD_S;
-    w->qtd_v = QTD_V;
-    w->tam_m = cria_coordenada(TAM_M, TAM_M);
-    w->tempo = TEMPO_INI;
+    w->qtd_hab = N_HABILIDADES;
+    w->qtd_v = N_COMPOSTOS_V;
+    (w->tam_m).x = N_TAMANHO_MUNDO;
+    (w->tam_m).y = N_TAMANHO_MUNDO;
+    w->tempo = T_INICIO;
     w->lef = fprio_cria();
     return w;
 }
