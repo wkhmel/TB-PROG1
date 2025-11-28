@@ -207,7 +207,10 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
 }
 
 /* representa o fim da simulacao */
-void fim(struct mundo_t *w);
+void fim(struct mundo_t *w){
+    printf("%6d: FIM", T_FIM_DO_MUNDO);
+    printf("HEROI %2d VIVO PAC %3d VEL %4d EXP %4d HABS [ %d %d ... ]")
+}
 
 /* cria os primeiros eventos e agenda o fim do mundo */
 void inicio(struct mundo_t *w);
