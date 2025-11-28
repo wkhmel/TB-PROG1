@@ -47,6 +47,13 @@ int dist_coord(struct coord_t c1, struct coord_t c2){
     return sqrt(pow(c2.x - c1.x) + pow(c2.y - c1.y));     
 }
 
+/* une as habilidades de todos os herois presentes em uma base */
+struct cjto_t *hab_base(struct mundo_t *w, int id_b){
+    
+
+
+}
+
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
 void chega(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct heroi_t *h = w->vet_h[ev->info1];
@@ -188,7 +195,7 @@ void morre(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
 void evento_missao(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct missao_t *m = w->vet_m[ev->info1];
     int tempo = ev->tempo;
-    dist_coord()
+    dist_coord(
 
 }
 
@@ -197,4 +204,3 @@ void fim(struct mundo_t *w);
 
 /* cria os primeiros eventos e agenda o fim do mundo */
 void inicio(struct mundo_t *w);
-
