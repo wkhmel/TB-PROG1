@@ -22,8 +22,11 @@ struct evento_t;
 /* coordenadas x e y */
 struct coord_t;
 
+/* cria uma nova coordenada */
+struct coord_t cria_coord(int x, int y);
+
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
-struct *cria_evento(struct mundo_t *m, int tipo, int tempo, int info1, int info2);
+struct evento_t *cria_evento(struct mundo_t *m, int tipo, int tempo, int info1, int info2);
 
 /* atualiza o tempo do mundo para o do evento */
 void atualiza_tempo(struct mundo_t *m, struct evento_t *ev);
