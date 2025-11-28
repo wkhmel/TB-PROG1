@@ -48,12 +48,12 @@ struct heroi_t *cria_heroi(int id_h){
     struct heroi_t *h = malloc(sizeof(struct heroi_t));
     if (!h)
         return NULL;
-    h->id_h = id_heroi;
-    h->skills =
-    h->paciencia =
-    h->speed = 
+    h->id_h = id_h;
+    h->skills = N_HABILIDADES;
+    h->paciencia = aleat(0, 100);
+    h->speed = aleat(50, 5000);
     h->exp = 0;
-    h->id_bh = 
+    h->id_bh = cjto_cria(aleat(1, 3));
     h->morreu = false;
     ....
 
