@@ -21,6 +21,12 @@ struct coord_t{
     int y;
 }
 
+struct coord_t cria_coord(int x, int y){
+    struct coord c;
+    c.x = int x;
+    c.y = int y;
+}
+
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
 struct *cria_evento(int tempo, int tipo, int info1, int info2){
     struct evento_t *ev = malloc(sizeof(struct evento_t));
