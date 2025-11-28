@@ -48,8 +48,8 @@ int dist_coord(struct coord_t c1, struct coord_t c2){
 }
 
 /* une as habilidades de todos os herois presentes em uma base */
-struct cjto_t *hab_base(struct mundo_t *w, int id_b){
-        
+struct cjto_t *hab_uniao(struct mundo_t *w, int id_b){
+    struct cjto_t *cjto_hab = cjto_cria(
 
 }
 
@@ -60,18 +60,25 @@ void chega(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     h->id_b = b->id_b; /* atualiza a base do heroi */
     int tempo = ev->tempo;
     int espera, tipo_ev;
+    char *texto;
     if (cjto_card(b->presentes) < (b->limite) && fila_tamanho(b->espera) == 0)
         espera = 1; /* simboliza o valor logico verdadeiro, e nao a cardinalidade da fila de espera */
     else espera = (h->paciencia) > (10*fila_tamanho(b->espera));
-    if (espera)
+    if (espera){
         tipo_ev = ESPERA;
-    else tipo_ev = DESISTE;
+        texto = "ESPERA";
+    }
+    else {
+        tipo_ev = DESISTE;
+        texto = "DESISTE";
+    }
     struct evento_t *evento = cria_evento(tempo, tipo_ev, h->id_h, b->id_b);
     if (!evento)
         return;
     int teste = fprio_insere(w->lef, evento, tipo_ev, evento->tempo);
     if (teste < 0)
-        return;    
+        return;   
+    printf("%6d: CHEGA HEROI %2d BASE %d (%2d/%2d) %s\n", tempo, h->id_h, b->id_b, cjto_card(b->presentes), b->limite, texto);    
 }
 
 /* representa a entrada do heroi na fila de espera */
@@ -87,6 +94,7 @@ void espera(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     int teste = fprio_insere(w->lef, evento, AVISA, tempo);
     if (teste < 0)
         return;
+    printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));
     }    
 }
 
@@ -102,7 +110,7 @@ void desiste(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     int teste = fprio_insere(w->lef, evento, VIAJA, tempo);
     if (teste < 0)
         return;
-
+    printf("%6d: DESIST HEROI %2d BASE %d", tempo, h->id_h, b->id_b);
 }
 
 /* representa que o porteiro da dada base eh avisado de que liberou uma vaga. */
@@ -138,7 +146,7 @@ void entra(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     int teste = fprio_insere(w->lef, evento, SAI, evento->tempo);
     if (teste < 0)
         return;    
-
+    printf("%6d: ENTRA HEROI %2d BASE %d (%2d/%2d) SAI %d\n", tempo, h->id_h, b->id_b, cjto_card(b->presentes), fila_tamanho(b->espera), tempo + tpb);
 }
 
 /* representa a saida do heroi da base em que estava, escolhendo uma outra base aonde viajar e avisando o porteiro de que ha uma nova vaga disponivel */
@@ -156,7 +164,7 @@ void sai(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     int teste2 = fprio_insere(w->lef, aviso, AVISA, tempo);
     if (teste1 < 0 || teste2 < 0)
         return;
-
+    printf("%6d: SAI HEROI %2d BASE %d (%2d/%2d)\n", tempo, h->id_h, b->id_b,  
 }
 
 /* representa a viagem do heroi para uma base, agendando e avisando o ponteiro */
