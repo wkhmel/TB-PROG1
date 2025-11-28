@@ -228,9 +228,9 @@ void morre(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
 /* representa o disparo de uma missao nova no instante T*/
 void evento_missao(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct missao_t *m = w->vet_m[ev->info1];
-    int tempo = ev->tempo;
+    int tempo = ev->tempo;    
     dist_coord(
-
+    
 }
 
 /* representa o fim da simulacao */
