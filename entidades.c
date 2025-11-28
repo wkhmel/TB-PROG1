@@ -11,7 +11,7 @@ struct heroi_t{
     int paciencia; /* valor inteiro que representa a paciencia do heroi */
     int speed; /* valor inteiro que representa a velocidade do heroi */
     int exp; /* valor inteiro que representa a experiencia do heroi */
-    int id_bh; /* id da base em que o heroi se encontra atualmente */
+    int id_b; /* id da base em que o heroi se encontra atualmente */
 };
 
 struct base_t{
