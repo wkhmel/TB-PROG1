@@ -19,6 +19,9 @@
 /* tem varios tipos, so mudando a informacao passada em info1 e info2 */
 struct evento_t;
 
+/* coordenadas x e y */
+struct coord_t;
+
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
 struct *cria_evento(struct mundo_t *m, int tipo, int tempo, int info1, int info2);
 
