@@ -4,6 +4,7 @@
 #include "theboys.h"
 #include "fprio.h"
 #include "fila.h"
+#include <math.h>
 
 /* representa um evento com todas as informacoes possiveis, as quais */
 /* podem ser utilizadas ou nao. */
@@ -14,6 +15,11 @@ struct evento_t{
     int info1;
     int info2; 
 };
+
+struct coord_t{
+    int x;
+    int y;
+}
 
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
 struct *cria_evento(int tempo, int tipo, int info1, int info2){
@@ -31,7 +37,9 @@ void atualiza_tempo(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef)
     w->tempo = ev->tempo;
 }
 
-int dist_coord(coord_x)
+int dist_coord(struct coord_t a1, struct coord_t a2){
+    return sqrt(pow(a2.x - a1.x) + pow(a2.y - a1.y));     
+}
 
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
 void chega(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
@@ -142,11 +150,13 @@ void sai(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
 /* representa a viagem do heroi para uma base, agendando e avisando o ponteiro */
 void viaja(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct heroi_t *h = w->vet_h[ev->info1];
+    struct base_t *b = w->vet_b[h->id_b];
     struct base_t *d = w->vet_b[ev->info2];
-    int duracao = (dist_coord(h->id_b, d->id_b))/(h->speed);
+    int duracao = (dist_coord(b->local, d->local))/(h->speed);
     struct evento_t *evento = cria_evento(tempo + duracao, CHEGA, h->id_h, d->id_b);
-    if (evento)
-        int teste = fprio_retira(lef, evento, CHEGA, evento->tempo);
+    if (!evento)
+        return;
+    int teste = fprio_retira(w->lef, evento, CHEGA, evento->tempo);
     if (teste < 0)
         return;
 
@@ -160,8 +170,9 @@ void morre(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     if (cjto_retira(b->presentes, h->id_h) > 0)
         h->morreu = true;
     struct evento_t *evento = cria_evento(tempo, AVISA, h->id_h, ???)
-    if (evento)
-        int teste = fprio_insere(lef, evento, AVISA, evento->tempo);
+    if (!evento)
+        return;
+    int teste = fprio_insere(lef, evento, AVISA, evento->tempo);
     if (teste < 0)
         return;
 
