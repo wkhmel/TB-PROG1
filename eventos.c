@@ -143,7 +143,11 @@ void viaja(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
 /* representa a morte de um heroi, liberando uma nova vaga e avisando o porteiro */
 void morre(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct heroi_t *h = w->vet_h[ev->info1];
-    
+    struct base_t *b = w->vet_b[ev->info2];
+    int tempo = ev->tempo;
+    morreu = true;
+    cjto_retira(b->presentes, h->id_h);
+
 
 
 }
