@@ -31,6 +31,8 @@ struct evento_t *cria_evento(struct mundo_t *m, int tipo, int tempo, int info1, 
 /* atualiza o tempo do mundo para o do evento */
 void atualiza_tempo(struct mundo_t *m, struct evento_t *ev);
 
+int dist_coord(struct coord_t c1, struct coord_t c2);
+
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
 void chega(struct mundo_t *m, struct evento_t *ev);
 
