@@ -43,8 +43,8 @@ void atualiza_tempo(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef)
     w->tempo = ev->tempo;
 }
 
-int dist_coord(struct coord_t a1, struct coord_t a2){
-    return sqrt(pow(a2.x - a1.x) + pow(a2.y - a1.y));     
+int dist_coord(struct coord_t c1, struct coord_t c2){
+    return sqrt(pow(c2.x - c1.x) + pow(c2.y - c1.y));     
 }
 
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
