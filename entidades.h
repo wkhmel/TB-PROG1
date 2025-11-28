@@ -12,13 +12,13 @@
 #define N_MISSOES T_FIM_DO_MUNDO/100
 #define N_COMPOSTOS_V N_HABILIDADES*3
 
-struct heroi_t();
+struct heroi_t;
 
-struct base_t();
+struct base_t;
 
-struct missao_t();
+struct missao_t;
 
-struct mundo_t();
+struct mundo_t;
 
 /* aqui, vou colocar as structs que criam e destroem cada uma das entidades */
 struct heroi_t *cria_heroi(int id_h);
