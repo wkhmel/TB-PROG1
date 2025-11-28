@@ -145,15 +145,23 @@ void morre(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
     struct heroi_t *h = w->vet_h[ev->info1];
     struct base_t *b = w->vet_b[ev->info2];
     int tempo = ev->tempo;
-    morreu = true;
-    cjto_retira(b->presentes, h->id_h);
-
-
+    if (cjto_retira(b->presentes, h->id_h) > 0)
+        h->morreu = true;
+    struct evento_t *evento = cria_evento(tempo, AVISA, h->id_h, ???)
+    if (evento)
+        int teste = fprio_insere(lef, evento, AVISA, evento->tempo);
+    if (teste < 0)
+        return;
 
 }
 
 /* representa o disparo de uma missao nova no instante T*/
-void evento_missao(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef);
+void evento_missao(struct mundo_t *w, struct evento_t *ev, struct fprio_t *lef){
+    struct missao_t *m = w->vet_m[ev->info1];
+    int tempo = ev->tempo;
+    
+
+}
 
 /* representa o fim da simulacao */
 void fim(struct mundo_t *w);
