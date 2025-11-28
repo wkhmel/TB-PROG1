@@ -49,8 +49,7 @@ int dist_coord(struct coord_t c1, struct coord_t c2){
 
 /* une as habilidades de todos os herois presentes em uma base */
 struct cjto_t *hab_base(struct mundo_t *w, int id_b){
-    
-
+        
 
 }
 
