@@ -1,0 +1,17 @@
+#include <math.h>
+#include <stdio.h>
+#include "entidades.h"
+#include "eventos.h"
+
+struct coord_t;
+
+struct dist_base;
+
+struct coord_t cria_coord(int x, int y);
+
+int dist_coord(struct coord_t c1, struct coord_t c2);
+
+long aleat(long min, long max);
+
+void atualiza_tempo(struct mundo *w, struct evento_t *ev);
+
