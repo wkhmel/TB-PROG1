@@ -32,3 +32,5 @@ void atualiza_tempo(struct mundo_t *w, struct evento_t *ev){
 int dist_coord(struct coord_t c1, struct coord_t c2){
     return sqrt(pow(c2.x - c1.x) + pow(c2.y - c1.y));     
 }
+
+void ordena_dist(int vet_dist[], int vet_id[], int qtd);
