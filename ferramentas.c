@@ -7,7 +7,7 @@ struct coord_t{
     int y;
 }
 
-struct dist_base {
+struct dist_base{
     int id;
     int distancia;
 };
