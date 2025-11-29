@@ -7,11 +7,6 @@ struct coord_t{
     int y;
 }
 
-struct dist_base{
-    int id_b; /* id que identifica a base */
-    int distancia; /* distancia da base ate a missao */
-} 
-
 struct coord_t cria_coord(int x, int y){
     struct coord c;
     c.x = int x;
