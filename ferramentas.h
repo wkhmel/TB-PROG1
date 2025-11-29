@@ -17,4 +17,6 @@ void atualiza_tempo(struct mundo *w, struct evento_t *ev);
 
 int dist_coord(struct coord_t c1, struct coord_t c2);
 
+void ordena_dist(int vet_dist[], int vet_id[], int qtd);
+
 #endif
