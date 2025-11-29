@@ -1,5 +1,5 @@
-#ifndef EVENTOS
-#define EVENTOS
+#ifndef EVENTOS_H
+#define EVENTOS_H
 #define CHEGA 1
 #define ESPERA 2
 #define DESISTE 3
