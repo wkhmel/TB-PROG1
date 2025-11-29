@@ -22,8 +22,7 @@ struct base_t{
     struct fila_t *espera; /* fila de herois na lista de espera */
     struct coord_t local; /* coordenadas X e Y da base */ 
     int missoes; /* quantidade de missoes de que essa base participou */
-    int max_fila; /* tamanho maximo que a fila de espera atingiu*/
-    int max_xp; /* maior qtd de xp que um heroi dessa base tem */
+    int max_fila; /* tamanho maximo que a fila de espera atingiu */
 };
 
 struct missao_t{
@@ -88,7 +87,6 @@ struct base_t *cria_base(int id){
     b->espera = fila_cria(); /* cria fila de espera vazia */
     b->missoes = 0;
     b->max_fila = 0;
-    b->max_xp = 0;
     return b;
 }
 
