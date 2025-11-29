@@ -7,8 +7,6 @@
 
 struct coord_t;
 
-struct dist_base;
-
 struct coord_t cria_coord(int x, int y);
 
 long aleat(long min, long max);
