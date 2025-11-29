@@ -5,7 +5,7 @@
 struct coord_t{
     int x;
     int y;
-}
+};
 
 struct dist_base{
     int id;
@@ -16,7 +16,7 @@ struct coord_t cria_coord(int x, int y){
     struct coord c;
     c.x = int x;
     c.y = int y;
-}
+};
 
 // (max - min + 1) gera um número entre 0 e (max - min)
 // Somando min, temos o deslocamento do resultado para o intervalo [min, max]
