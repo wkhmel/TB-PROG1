@@ -12,7 +12,7 @@ struct heroi_t{
     int speed; /* valor inteiro que representa a velocidade do heroi */
     int exp; /* valor inteiro que representa a experiencia do heroi */
     int id_b; /* id da base em que o heroi se encontra atualmente */
-    bool morreu; /* true se morreu, false se permanece vivo */ 
+    bool morto; /* true se morreu, false se permanece vivo */ 
 };
 
 struct base_t{
