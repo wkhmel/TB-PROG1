@@ -33,21 +33,18 @@ int dist_coord(struct coord_t c1, struct coord_t c2){
     return sqrt(pow(c2.x - c1.x) + pow(c2.y - c1.y));     
 }
 
-void ordena_dist(int vet_dist[], int vet_id[], int qtd){
+void ordena_dist(struct dist_base v[], int qtd){
     int menor;
     for (int x = 0; x < qtd - 1; x++){
         menor = x;
         for (y = i + 1; y < qtd; y++){
-            if (vet_dist[y] < vet_dist[min])
+            if (v[y]->distancia < vet_dist[min]->distancia)
                 menor = y;
             if (menor != x){
                 /* faz a troca entre o antigo menor e o atual menor */
-                int aux = vet_dist[x];
-                int aux_id = vet_id[x];    
-                vet_dist[x] = vet_dist[y];
-                vet_id[x] = vet_id[x];
-                vet_dist[y] = aux;
-                vet_id[y] = aux_id;
+                struct dist_base aux = v[x];
+                v[x] = v[y];
+                v[y] = aux;
             }                
         }
     }
