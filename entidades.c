@@ -47,6 +47,7 @@ struct mundo_t{
     struct fprio_t *lef;
     int total_eventos; /* qtd de eventos de que participou */
     int missoes_cumpridas; /* qtd de missoes que foram cumpridas */
+    int mortes; /* qtd total de mortes no mundo */
 }
 
 /* cria um heroi. retorna o ponteiro para o heroi ou NULL em caso de erro. */
@@ -160,6 +161,7 @@ struct mundo_t *cria_mundo(){
     w->lef = fprio_cria();
     w->total_eventos = 0;
     w->missoes_cumpridas = 0;
+    w->mortes = 0;
     return w;
 }
 
