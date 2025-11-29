@@ -28,6 +28,7 @@ struct missao_t{
     int id_m; /* id dessa missao */
     struct cjto_t *skills /* habilidades requeridas para participar dessa missao */
     struct coord_t local; /* coordenadas X e Y da missao */
+    int tentativas; /* qtd de tentativas feitas para essa missao, cumprida ou nao */
     bool realizou;
 };
 
@@ -105,6 +106,7 @@ struct missao_t *cria_missao(int id){
         return NULL;
     m->id_m = id;
     m->skills = cjto_aleat(aleat(6,10), N_HABILIDADES);
+    m->tentativas = 0;
     m->realizou = false;
     return m;
 }
