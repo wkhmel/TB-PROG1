@@ -21,6 +21,7 @@ struct base_t{
     struct cjto_t *presentes; /* conjunto de herois que essa base tem */
     struct fila_t *espera; /* fila de herois na lista de espera */
     struct coord_t local; /* coordenadas X e Y da base */ 
+    int missoes; /* quantidade de missoes de que essa base participou */
 };
 
 struct missao_t{
@@ -42,6 +43,8 @@ struct mundo_t{
     struct coord_t tam_m; /* tamanho maximo do mundo. nao precisa ser alocado porque eh constante. 1 unidade = 1 metro real */
     int tempo /* tempo atual desse mundo. 1 unidade = 1 minuto real */
     struct fprio_t *lef;
+    int total_eventos; /* qtd de eventos de que participou */
+    int missoes_cumpridas; /* qtd de missoes que foram cumpridas */
 }
 
 
@@ -55,6 +58,7 @@ struct heroi_t *cria_heroi(int id){
     h->paciencia = aleat(0, 100);
     h->speed = aleat(50, 5000);
     h->exp = 0;
+    h->id_b = -1;
     h->morreu = false;
     
 
@@ -80,6 +84,7 @@ struct base_t *cria_base(int id){
     b->limite = aleat(3, 10);
     b->presentes = cjto_cria(); /* cria conjunto vazio */
     b->espera = fila_cria(); /* cria fila de espera vazia */
+    b->missoes = 0;
     return b;
 }
 
@@ -151,6 +156,8 @@ struct mundo_t *cria_mundo(){
     (w->tam_m).y = N_TAMANHO_MUNDO;
     w->tempo = T_INICIO;
     w->lef = fprio_cria();
+    w->total_eventos = 0;
+    w->missoes_cumpridas = 0;
     return w;
 }
 
@@ -171,6 +178,6 @@ struct mundo_t *destroi_mundo(struct mundo_t *w){
 
     fprio_destroi(w->lef);
     
-    free(m);
+    free(w);
     return NULL;
 }
