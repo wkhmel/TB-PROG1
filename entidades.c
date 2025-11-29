@@ -48,7 +48,6 @@ struct mundo_t{
     int missoes_cumpridas; /* qtd de missoes que foram cumpridas */
 }
 
-
 /* cria um heroi. retorna o ponteiro para o heroi ou NULL em caso de erro. */
 struct heroi_t *cria_heroi(int id){
     struct heroi_t *h = malloc(sizeof(struct heroi_t));
@@ -61,7 +60,6 @@ struct heroi_t *cria_heroi(int id){
     h->exp = 0;
     h->id_b = -1;
     h->morreu = false;
-    
 
     return h;
 }
