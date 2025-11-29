@@ -165,24 +165,16 @@ void morre(struct mundo_t *w, struct evento_t *ev){
 }
 
 /* une todas as habilidades dos herois de uma mesma base */
-struct cjto_t *all_skills_base(mundo_t *m, int id_base)
+/* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
+struct cjto_t *skills_b(mundo_t *w, int id_b)
 {
-    struct set_t *uniao = 
-    int i;
-
-    if (!(uniao = set_create(N_HABILIDADES)))
-        fim_execucao("set create in fun uniao_habilidades");
-
-    /*para cada heroi, pergunto se ele esta na base, caso esteja,
-    incluo as suas habilidades ao conjunto de habilidades da base,
-    sem repetir alguma que ja esta la. Def. Uniao*/
-    i = 0;
-    while (i < m->n_herois)
-    {
-        /*Pergunta se o heroi "i" esta contido no conjunto "presentes"*/
-        if (set_in(m->base[id_base].presentes, i))
-            set_union(m->heroi[i].habil, uniao, uniao);
-        i++;
+    struct set_t *uniao = cjto(N_HABILIDADES);
+    if (!uniao)
+        return NULL;
+    
+    for (int i = 0; i < w->qtd_h; i++){
+        if (cjto_pertence((w->vet_b[id_b])->presentes, i))
+            uniao = cjto_uniao(uniao, (w->vet_h[i])->skills);
     }
     return uniao;
 }
@@ -191,15 +183,44 @@ struct cjto_t *all_skills_base(mundo_t *m, int id_base)
 void evento_missao(struct mundo_t *w, struct evento_t *ev){
     struct missao_t *m = w->vet_m[ev->info1];
     struct base_t *b;
-    struct dist_base *distancias[N_BASES]; /* struct de distancia de cada base ate a missao */
+    struct dist_base distancias[N_BASES]; /* struct de distancia de cada base ate a missao */
     int tempo = ev->tempo;    
-    
+    m->tentativas++;
     /* verifica a distancia de cada base em relacao ao local da missao */
     for (int i = 0; i < N_BASES; i++){
-        distancias[i]->id_b = i;
-        distancias[i]->distancia = dist_coord(m->local, w->vet_b[i]->local);
+        distancias[i].id_b = i;
+        distancias[i].distancia = dist_coord(m->local, w->vet_b[i]->local);
     }
-    
+    ordena_dist(distancias, N_BASES);
+    int base_missao = -1;
+    for (i = 0; i < w->qtd_b; i++){
+        struct cjto_t *uni = skills_b(w, distancias[i].id_b);
+        printf("%6d: MISSAO %d TENT %d HAB REQ: ", tempo, m->id_m, m->tentativas);
+        cjto_imprime(m->skills);
+        printf("\n");
+        if (cjto_contem(uni, m->skills)){
+            base_missao = distancias[i].id_b;
+            cjto_destroi(uni);
+            break
+        }
+        cjto_destroi(uni);
+    }
+    if (base_missao >= 0){
+        m->realizou = true;
+        printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [ ", tempo, m->id_m, base_missao);
+        cjto_imprime((w->vet_b[base_missao])->presentes);
+        printf("\n");
+
+        /* aumentar xp dos herois */
+        for (j = 0; j < m->qtd_h; j++)
+            if (cjto_pertence(w->vet_b[base_missao]->presentes, j))
+                (w->vet_h[j])->exp++;
+    }
+    else {
+        printf("%6d: MISSAO %d IMPOSSIVEL", tempo, m->id_m);
+        /* coloca na agenda de novo */
+        if (!adiciona_evento(w, tempo + 24*60, EV_MISSAO, m->id_m, 
+    }
 }
 
 /* representa o fim da simulacao */
