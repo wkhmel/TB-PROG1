@@ -273,10 +273,4 @@ void fim(struct mundo_t *w, struct evento_t *ev){
     printf("TAXA MORTALIDADE: %.1f%%", mortalidade);
 }
 
-/* cria os primeiros eventos e agenda o fim do mundo */
-void inicio(struct mundo_t *w){
 
-
-
-
-    
