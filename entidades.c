@@ -124,6 +124,7 @@ struct missao_t *destroi_missao(struct missao_t *m){
     free(m);
     return NULL;
 }
+
 /* inicializacao */
 struct mundo_t *cria_mundo(){
     struct mundo_t *w = malloc(sizeof(struct mundo_t));
