@@ -140,7 +140,7 @@ void entra(struct mundo_t *w, struct evento_t *ev){
     if (!verifica_mundo(w))
         return;
     int tpb = 15 + (h->paciencia)*aleat(1, 20);
-    if (!adiciona_evento(w, tempo + tbp, SAI, h->id_h, b->id_b))
+    if (!adiciona_evento(w, tempo + tpb, SAI, h->id_h, b->id_b))
         return;    
     printf("%6d: ENTRA HEROI %2d BASE %d (%2d/%2d) SAI %d\n", tempo, h->id_h, b->id_b, cjto_card(b->presentes), b->limite, tempo + tpb);
 }
@@ -167,7 +167,7 @@ void viaja(struct mundo_t *w, struct evento_t *ev){
     int tempo = ev->tempo;
     if (!verifica_mundo(w))
         return;
-    distancia = dist_coord(b->local, d->local);
+    int distancia = dist_coord(b->local, d->local);
     int duracao = distancia/(h->speed);
     if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b))
         return;
@@ -277,7 +277,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
 
     printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, m->id_m);
     /* coloca na agenda de novo */
-    if (!adiciona_evento(w, tempo + 24*60, EV_MISSAO, m->id_m, -1))
+    if (!adiciona_evento(w, tempo + 24*60, MISSAO, m->id_m, -1))
         return;
 }
 
@@ -309,7 +309,7 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
         struct base_t *base = w->vet_b[i];
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d", i, base->limite, base->max_fila, base->missoes);
     }
-    float taxa_missoes = (w->missoes_cumpridas)/(N_MISSOES);
+    float taxa_missoes = (w->missoes_cumpridas)/((float)N_MISSOES);
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;

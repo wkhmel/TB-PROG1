@@ -48,7 +48,7 @@ int inicia_eventos(struct mundo_t *w){
     }
 
 /* agendamento do fim do mundo */
-    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1));
+    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1))
         return 0;
     return 1;
 }
@@ -91,8 +91,8 @@ void espera(struct mundo_t *w, struct evento_t *ev){
     if (!adiciona_evento(w, tempo, AVISA, h->id_h, b->id_b))
         return;
     int atual = fila_tamanho(b->espera);
-    if (atual > b->fila_max)
-        b->fila_max = atual;
+    if (atual > b->max_fila)
+        b->max_fila = atual;
     printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));    
 }
 
@@ -140,7 +140,7 @@ void entra(struct mundo_t *w, struct evento_t *ev){
     if (!verifica_mundo(w))
         return;
     int tpb = 15 + (h->paciencia)*aleat(1, 20);
-    if (!adiciona_evento(w, tempo + tbp, SAI, h->id_h, b->id_b))
+    if (!adiciona_evento(w, tempo + tpb, SAI, h->id_h, b->id_b))
         return;    
     printf("%6d: ENTRA HEROI %2d BASE %d (%2d/%2d) SAI %d\n", tempo, h->id_h, b->id_b, cjto_card(b->presentes), b->limite, tempo + tpb);
 }
@@ -195,7 +195,7 @@ void morre(struct mundo_t *w, struct evento_t *ev){
 /* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
 struct cjto_t *skills_b(struct mundo_t *w, int id_b){
     if (!verifica_mundo(w))
-        return;
+        return NULL;
     struct cjto_t *uniao = cjto_cria(N_HABILIDADES); /* cria um conjunto vazio com capacidade para ate N_HABILIDADES */
     if (!uniao)
         return NULL;
@@ -263,7 +263,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         printf("\n");
         /* aumentar xp dos herois */
         for (int j = 0; j < w->qtd_h; j++){
-            if (cjto_pertence((w->vet_b[base_missao]->presentes, j)))
+            if (cjto_pertence(w->vet_b[base_missao]->presentes, j))
                 (w->vet_h[j])->exp++;
         }
         return;
@@ -271,7 +271,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     if ((w->qtd_v > 0) && (tempo%2500 == 0)){
         w->qtd_v--;
         m->realizou = true;
-        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0)
+        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0);
         return;
     }
 
@@ -290,7 +290,7 @@ void fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
     struct base_t *b;
     
-    if (!verifica_mundo)
+    if (!verifica_mundo(w))
         return;
 
     printf("%6d: FIM", T_FIM_DO_MUNDO);
@@ -306,23 +306,23 @@ void fim(struct mundo_t *w, struct evento_t *ev){
 
     for (int i = 0; i < N_BASES; i++){
         struct base_t *base = w->vet_b[i];
-        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->fila_max, base->missoes);
+        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->max_fila, base->missoes);
     }
-    float taxa_missoes = (w->missoes_cumpridas)/(N_MISSOES);
+    float taxa_missoes = (w->missoes_cumpridas)/((float)N_MISSOES);
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         if (((w->vet_m[a])->tentativas) > max_tentativas)
             max_tentativas = (w->vet_m[a])->tentativas;
     }
     int min_tentativas = max_tentativas;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         if (min_tentativas > (w->vet_m[a])->tentativas)
             min_tentativas = (w->vet_m[a])->tentativas;
     }     
     int soma = 0;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         soma = soma + (w->vet_m[a])->tentativas;
     }            
     float media = (float)soma/w->qtd_m;
@@ -333,20 +333,21 @@ void fim(struct mundo_t *w, struct evento_t *ev){
 
 void simula_eventos(struct mundo_t *w){
     struct evento_t *ev;
-    int tipo_evento, tempo, fim = 0;
+    int tipo_evento, tempo, fim_sim = 0;
     if (!verifica_mundo(w))
         return;
-    while (!fim && fprio_tamanho(lef) > 0){
+    while (!fim_sim && fprio_tamanho(w->lef) > 0){
         ev = fprio_retira(w->lef, &tipo_evento, &tempo);
         if (!ev)
             break;
         if ((tipo_evento != MISSAO) && (tipo_evento != AVISA) && (tipo_evento != FIM)){
             struct heroi_t *h = w->vet_h[ev->info1];
-            if (h->morto)
+            if (h->morto) {
                 free(ev);
                 break;
+            }
         }
-        tempo_mundo(w) = tempo;
+        tempo = tempo_mundo(w);
         w->total_eventos++;
                 
         switch(tipo_evento){        
@@ -379,7 +380,7 @@ void simula_eventos(struct mundo_t *w){
                 break;
             case FIM:
                 fim(w, ev);
-                fim = 1;
+                fim_sim = 1;
         }
 
     }
