@@ -43,6 +43,8 @@ struct base_t *cria_base(int id){
     b->limite = aleat(3, 10);
     b->presentes = cjto_cria(N_HEROIS); /* cria conjunto vazio com capacidade para ate N_HEROIS */
     b->espera = fila_cria(); /* cria fila de espera vazia */
+    b->local.x = aleat(0, N_TAMANHO_MUNDO - 1);
+    b->local.y = aleat(0, N_TAMANHO_MUNDO - 1);
     b->missoes = 0;
     b->max_fila = 0;
 
