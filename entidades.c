@@ -48,7 +48,7 @@ int inicia_eventos(struct mundo_t *w){
     }
 
 /* agendamento do fim do mundo */
-    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1));
+    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1))
         return 0;
     return 1;
 }
@@ -93,7 +93,7 @@ void espera(struct mundo_t *w, struct evento_t *ev){
     int atual = fila_tamanho(b->espera);
     if (atual > b->fila_max)
         b->fila_max = atual;
-    printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));    
+    printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));   
 }
 
 /* representa a desistencia de um heroi em esperar para entrar em uma base, e em seguida esse heroi viaja para uma base aleatoria D */
@@ -106,7 +106,7 @@ void desiste(struct mundo_t *w, struct evento_t *ev){
     int base_destino = aleat(0, w->qtd_b - 1);
     if (!adiciona_evento(w, tempo, VIAJA, h->id_h, b->id_b))
         return;
-    printf("%6d: DESIST HEROI %2d BASE %d", tempo, h->id_h, b->id_b);
+    printf("%6d: DESIST HEROI %2d BASE %d\n", tempo, h->id_h, b->id_b);
 }
 
 /* representa que o porteiro da dada base eh avisado de que liberou uma vaga. */
@@ -127,7 +127,7 @@ void avisa(struct mundo_t *w, struct evento_t *ev){
             return;
         if (!adiciona_evento(w, tempo, ENTRA, heroi, b->id_b))
             return;
-        printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d", tempo, b->id_b, heroi);
+        printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d\n", tempo, b->id_b, heroi);
     }
 
 }
@@ -169,20 +169,20 @@ void viaja(struct mundo_t *w, struct evento_t *ev){
         return;
     distancia = dist_coord(b->local, d->local);
     int duracao = distancia/(h->speed);
-    if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b)
+    if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b))
         return;
-    printf("%6d: VIAJA HEROI %2d BASE %d BASE %d DIST %d VEL %d CHEGA %d", tempo, h->id_h, b->id_b, d->id_b, distancia, h->speed, tempo + duracao); 
+    printf("%6d: VIAJA HEROI %2d BASE %d BASE %d DIST %d VEL %d CHEGA %d\n", tempo, h->id_h, b->id_b, d->id_b, distancia, h->speed, tempo + duracao); 
 }
 
 /* representa a morte de um heroi, liberando uma nova vaga e avisando o porteiro */
 void morre(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h = w->vet_h[ev->info1];
     struct base_t *b = w->vet_b[h->id_b];
-    struct missao_t *m = w->vet_m[ev->info2].
+    struct missao_t *m = w->vet_m[ev->info2];
     int tempo = ev->tempo;
     if (!verifica_mundo(w) || !b->presentes || h->morto)
         return;
-    printf("%6d: MORRE HEROI %2d MISSAO %d", tempo, h->id_h, m->id_m);
+    printf("%6d: MORRE HEROI %2d MISSAO %d\n", tempo, h->id_h, m->id_m);
     if (cjto_retira(b->presentes, h->id_h) < 0)
         return;
     h->morto = true;
@@ -195,7 +195,7 @@ void morre(struct mundo_t *w, struct evento_t *ev){
 /* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
 struct cjto_t *skills_b(struct mundo_t *w, int id_b){
     if (!verifica_mundo(w))
-        return;
+        return NULL;
     struct cjto_t *uniao = cjto_cria(N_HABILIDADES); /* cria um conjunto vazio com capacidade para ate N_HABILIDADES */
     if (!uniao)
         return NULL;
@@ -213,7 +213,7 @@ int maior_xp(struct mundo_t *w, int id_b){
     int maior = -1;
     int maior_id = -1;
     for (int i = 0; i < w->qtd_h; i++){
-        if (cjto_pertence(w->vet_b[id_b]->presentes), i){
+        if (cjto_pertence(w->vet_b[id_b]->presentes, i)){
             if ((w->vet_h[i])->exp > maior){
                 maior = (w->vet_h[i])->exp;
                 maior_id = (w->vet_h[i])->id_h;
@@ -262,7 +262,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         cjto_imprime((w->vet_b[base_missao])->presentes);
         printf("\n");
         /* aumentar xp dos herois */
-        for (j = 0; j < w->qtd_h; j++){
+        for (int j = 0; j < w->qtd_h; j++){
             if (cjto_pertence((w->vet_b[base_missao])->presentes, j))
                 (w->vet_h[j])->exp++;
         }
@@ -271,13 +271,13 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     if ((w->qtd_v > 0) && (tempo%2500 == 0)){
         w->qtd_v--;
         m->realizou = true;
-        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0)
+        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0);
         return;
     }
 
-    printf("%6d: MISSAO %d IMPOSSIVEL", tempo, m->id_m);
+    printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, m->id_m);
     /* coloca na agenda de novo */
-    if (!adiciona_evento(w, tempo + 24*60, EV_MISSAO, m->id_m, -1));
+    if (!adiciona_evento(w, tempo + 24*60, EV_MISSAO, m->id_m, -1))
         return;
 }
 
@@ -291,7 +291,7 @@ void fim(struct mundo_t *w, struct evento_t *ev){
     struct base_t *b;
     int tempo = ev->tempo;
 
-    if (!verifica_mundo)
+    if (!verifica_mundo(w))
         return;
 
     printf("%6d: FIM", T_FIM_DO_MUNDO);
@@ -310,26 +310,26 @@ void fim(struct mundo_t *w, struct evento_t *ev){
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d", i, base->limite, base->fila_max, base->missoes);
     }
     float taxa_missoes = (w->missoes_cumpridas)/(N_MISSOES);
-    printf("EVENTOS TRATADOS: %d", w->total_eventos);
-    printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
+    printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
+    printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         if (((w->vet_m[a])->tentativas) > max_tentativas)
             max_tentativas = (w->vet_m[a])->tentativas;
     }
     int min_tentativas = max_tentativas;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         if (min_tentativas > (w->vet_m[a])->tentativas)
             min_tentativas = (w->vet_m[a])->tentativas;
     }     
     int soma = 0;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         soma = soma + (w->vet_m[a])->tentativas;
     }            
     float media = (float)soma/w->qtd_m;
     float mortalidade = (float)w->mortes/w->qtd_h;
-    printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f", min_tentativas, max_tentativas, media);
-    printf("TAXA MORTALIDADE: %.1f%%", mortalidade);
+    printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f\n", min_tentativas, max_tentativas, media);
+    printf("TAXA MORTALIDADE: %.1f%%\n", mortalidade);
 }
 
 void simula_eventos(struct mundo_t *w){
@@ -338,17 +338,18 @@ void simula_eventos(struct mundo_t *w){
     int fim = 0;
     if (!verifica_mundo(w))
         return;
-    while (!fim && fprio_tamanho(lef) > 0){
+    while (!fim && fprio_tamanho(w->lef) > 0){
         ev = fprio_retira(w->lef, &tipo_evento, &tempo);
         if (!ev)
             break;
         if ((tipo_evento != MISSAO) && (tipo_evento != AVISA) && (tipo_evento != FIM)){
             struct heroi_t *h = w->vet_h[ev->info1];
-            if ((h->morto))
+            if ((h->morto)){
                 free(ev);
-                break;
+                continue;
+            }
         }
-        tempo_mundo(w) = tempo;
+        w->tempo = tempo;
         w->total_eventos++;
                 
         switch(tipo_evento){        
@@ -380,7 +381,7 @@ void simula_eventos(struct mundo_t *w){
                 evento_missao(w, ev);
                 break;
             case FIM:
-                fim(w, ev);
+                ev_fim(w, ev);
                 fim = 1;
         }
 
