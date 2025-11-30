@@ -56,3 +56,9 @@ void simula_eventos(struct mundo_t *w){
         ev = NULL;
     }
 }
+
+int verifica_tempo(struct mundo_t *w){
+    if (w->tempo >= T_FIM_DO_MUNDO)
+        return 0;
+    return 1;
+}
