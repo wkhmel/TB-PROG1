@@ -140,7 +140,7 @@ void entra(struct mundo_t *w, struct evento_t *ev){
     if (!verifica_mundo(w))
         return;
     int tpb = 15 + (h->paciencia)*aleat(1, 20);
-    if (!adiciona_evento(w, tempo + tbp, SAI, h->id_h, b->id_b))
+    if (!adiciona_evento(w, tempo + tpb, SAI, h->id_h, b->id_b))
         return;    
     printf("%6d: ENTRA HEROI %2d BASE %d (%2d/%2d) SAI %d\n", tempo, h->id_h, b->id_b, cjto_card(b->presentes), b->limite, tempo + tpb);
 }
@@ -167,7 +167,7 @@ void viaja(struct mundo_t *w, struct evento_t *ev){
     int tempo = ev->tempo;
     if (!verifica_mundo(w))
         return;
-    distancia = dist_coord(b->local, d->local);
+    int distancia = dist_coord(b->local, d->local);
     int duracao = distancia/(h->speed);
     if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b))
         return;
@@ -228,7 +228,6 @@ int maior_xp(struct mundo_t *w, int id_b){
 /* representa o disparo de uma missao nova no instante T*/
 void evento_missao(struct mundo_t *w, struct evento_t *ev){
     struct missao_t *m = w->vet_m[ev->info1];
-    struct base_t *b;
     struct dist_base dist[N_BASES]; /* struct de distancia de cada base ate a missao */
     int tempo = ev->tempo;    
     if (!verifica_mundo(w) || m->realizou)
@@ -288,9 +287,6 @@ int tempo_mundo(struct mundo_t *w){
 /* representa o fim da simulacao */
 void ev_fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
-    struct base_t *b;
-    int tempo = ev->tempo;
-
     if (!verifica_mundo(w))
         return;
 
@@ -334,7 +330,7 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
 
 void simula_eventos(struct mundo_t *w){
     struct evento_t *ev;
-    int tipo_evento, tempo, id_h;
+    int tipo_evento, tempo, fim;
     int fim = 0;
     if (!verifica_mundo(w))
         return;
