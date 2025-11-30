@@ -180,12 +180,12 @@ void morre(struct mundo_t *w, struct evento_t *ev){
     struct base_t *b = w->vet_b[h->id_b];
     struct missao_t *m = w->vet_m[ev->info2].
     int tempo = ev->tempo;
-    if (!verifica_mundo(w) || !b->presentes || h->morreu)
+    if (!verifica_mundo(w) || !b->presentes || h->morto)
         return;
     printf("%6d: MORRE HEROI %2d MISSAO %d", tempo, h->id_h, m->id_m);
     if (cjto_retira(b->presentes, h->id_h) < 0)
         return;
-    h->morreu = true;
+    h->morto = true;
     w->mortes++;
     if (!adiciona_evento(w, tempo, AVISA, -1, b->id_b))
         return;    
@@ -296,7 +296,7 @@ void fim(struct mundo_t *w, struct evento_t *ev){
 
     printf("%6d: FIM", T_FIM_DO_MUNDO);
     for (int i = 0; i < N_HEROIS; i++){
-        if ((w->vet_h[i])->morreu)
+        if ((w->vet_h[i])->morto)
             printf("HEROI %2d MORTO ", i);
         else
             printf("HEROI %2d VIVO ", i);
