@@ -83,10 +83,11 @@ struct base_t *cria_base(int id){
         return NULL;
     b->id_b = id;
     b->limite = aleat(3, 10);
-    b->presentes = cjto_cria(); /* cria conjunto vazio */
+    b->presentes = cjto_cria((b->limite)); /* cria conjunto vazio */
     b->espera = fila_cria(); /* cria fila de espera vazia */
     b->missoes = 0;
     b->max_fila = 0;
+    
     return b;
 }
 
@@ -109,6 +110,8 @@ struct missao_t *cria_missao(int id){
     m->skills = cjto_aleat(aleat(6,10), N_HABILIDADES);
     m->tentativas = 0;
     m->realizou = false;
+    m->local.x = aleat(0, N_TAMANHO_MUNDO - 1);
+    m->local.x = aleat(0, N_TAMANHO_MUNDO - 1);
     return m;
 }
 
