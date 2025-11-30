@@ -77,7 +77,7 @@ void evento_missao(struct mundo_t *m, struct evento_t *ev);
 int tempo_mundo(struct mundo_t *w);
 
 /* representa o fim da simulacao */
-void fim(struct mundo_t *m, struct evento_t *ev);
+void ev_fim(struct mundo_t *m, struct evento_t *ev);
 
 void simula_eventos(struct mundo_t *w);
 
