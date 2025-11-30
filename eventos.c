@@ -106,7 +106,7 @@ void desiste(struct mundo_t *w, struct evento_t *ev){
     int base_destino = aleat(0, w->qtd_b - 1);
     if (!adiciona_evento(w, tempo, VIAJA, h->id_h, base_destino))
         return;
-    printf("%6d: DESIST HEROI %2d BASE %d", tempo, h->id_h, base_destino);
+    printf("%6d: DESIST HEROI %2d BASE %d\n", tempo, h->id_h, base_destino);
 }
 
 /* representa que o porteiro da dada base eh avisado de que liberou uma vaga. */
@@ -127,7 +127,7 @@ void avisa(struct mundo_t *w, struct evento_t *ev){
             return;
         if (!adiciona_evento(w, tempo, ENTRA, heroi, b->id_b))
             return;
-        printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d", tempo, b->id_b, heroi);
+        printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d\n", tempo, b->id_b, heroi);
     }
 
 }
@@ -182,7 +182,7 @@ void morre(struct mundo_t *w, struct evento_t *ev){
     int tempo = ev->tempo;
     if (!verifica_mundo(w) || !b->presentes || h->morto)
         return;
-    printf("%6d: MORRE HEROI %2d MISSAO %d", tempo, h->id_h, m->id_m);
+    printf("%6d: MORRE HEROI %2d MISSAO %d\n", tempo, h->id_h, m->id_m);
     if (cjto_retira(b->presentes, h->id_h) < 0)
         return;
     h->morto = true;
@@ -312,17 +312,17 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         if (((w->vet_m[a])->tentativas) > max_tentativas)
             max_tentativas = (w->vet_m[a])->tentativas;
     }
     int min_tentativas = max_tentativas;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         if (min_tentativas > (w->vet_m[a])->tentativas)
             min_tentativas = (w->vet_m[a])->tentativas;
     }     
     int soma = 0;
-    for (a = 0; a < w->qtd_m; a++){
+    for (int a = 0; a < w->qtd_m; a++){
         soma = soma + (w->vet_m[a])->tentativas;
     }            
     float media = (float)soma/w->qtd_m;
