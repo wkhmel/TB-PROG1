@@ -137,15 +137,15 @@ struct mundo_t *destroi_mundo(struct mundo_t *w){
     if (!w)
         return NULL;
     for (int i = 0; i < w->qtd_h; i++){
-        destroi_heroi(w->vet_h[i]);
+        destroi_heroi(&w->vet_h[i]);
     }
 
     for (int i = 0; i < w->qtd_b; i++){
-        destroi_base(w->vet_b[i]);
+        destroi_base(&w->vet_b[i]);
     }
 
     for (int i = 0; i < w->qtd_m; i++){
-        destroi_missao(w->vet_m[i]);
+        destroi_missao(&w->vet_m[i]);
     }
 
     fprio_destroi(w->lef);
