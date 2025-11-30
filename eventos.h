@@ -10,10 +10,14 @@
 #define MORRE 8
 #define MISSAO 9
 #define FIM 10
-
-#include "theboys.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "entidades.h"
+#include "eventos.h"
 #include "fprio.h"
-#include "entidades.h" 
+#include "conjunto.h"
+#include "fila.h"
+#include "ferramentas.h"
 
 /* eventos que causarao as mudancas de estado na simulacao discreta */
 /* tem varios tipos, so mudando a informacao passada em info1 e info2 */
