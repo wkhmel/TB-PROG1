@@ -291,6 +291,12 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         return;
 }
 
+int tempo_mundo(struct mundo_t *w){
+    if (!w)
+        return 0;
+    return w->tempo;
+}
+
 /* representa o fim da simulacao */
 void fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
