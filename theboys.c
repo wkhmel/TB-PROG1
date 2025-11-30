@@ -7,10 +7,10 @@
 
 // programa principal
 int main (){
-  // iniciar o mundo
+  // inicia o mundo
   struct mundo_t *w;
   srand(0); 
-
+  // cria o mundo 
   w = cria_mundo();
 
   // agenda os eventos iniciais uma unica vez
