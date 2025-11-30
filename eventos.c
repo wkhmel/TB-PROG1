@@ -106,7 +106,7 @@ void desiste(struct mundo_t *w, struct evento_t *ev){
     int base_destino = aleat(0, w->qtd_b - 1);
     if (!adiciona_evento(w, tempo, VIAJA, h->id_h, base_destino))
         return;
-    printf("%6d: DESIST HEROI %2d BASE %d\n", tempo, h->id_h, base_destino);
+    printf("%6d: DESIST HEROI %2d BASE %d\n", tempo, h->id_h, b->id_b);
 }
 
 /* representa que o porteiro da dada base eh avisado de que liberou uma vaga. */
@@ -286,7 +286,7 @@ int tempo_mundo(struct mundo_t *w){
 }
 
 /* representa o fim da simulacao */
-void ev_fim(struct mundo_t *w, struct evento_t *ev){
+void ev_fim(struct mundo_t *w){
     struct heroi_t *h;
     struct base_t *b;
     
@@ -379,7 +379,7 @@ void simula_eventos(struct mundo_t *w){
                 evento_missao(w, ev);
                 break;
             case FIM:
-                ev_fim(w, ev);
+                ev_fim(w);
                 fim = 1;
         }
         free(ev);
