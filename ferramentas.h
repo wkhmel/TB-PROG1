@@ -3,9 +3,15 @@
 #include <math.h>
 #include <stdlib.h>
 
-struct coord_t;
+struct coord_t{
+    int x;
+    int y;
+};
 
-struct dist_base;
+struct dist_base{
+    int id;
+    int distancia;
+};
 
 long aleat(long min, long max);
 
