@@ -76,4 +76,6 @@ int morte_heroi(struct mundo_t *w, struct evento_t *ev);
 /* representa o fim da simulacao */
 void fim(struct mundo_t *m, struct evento_t *ev);
 
+void simula_eventos(struct mundo_t *w);
+
 #endif
