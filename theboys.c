@@ -7,8 +7,7 @@
 #include "fprio.h"
 
 // programa principal
-int main ()
-{
+int main (){
   // iniciar o mundo
   struct mundo_t *w;
   struct evento_t *ev;
