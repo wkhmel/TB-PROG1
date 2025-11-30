@@ -286,7 +286,7 @@ int tempo_mundo(struct mundo_t *w){
 }
 
 /* representa o fim da simulacao */
-void fim(struct mundo_t *w, struct evento_t *ev){
+void ev_fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
     struct base_t *b;
     int tempo = ev->tempo;
