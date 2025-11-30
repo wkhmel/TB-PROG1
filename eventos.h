@@ -37,31 +37,31 @@ int verifica_mundo(struct mundo_t *w);
 
 /* inicia a simulacao dos eventos, retornando 1 em sucesso e 0 em falha */
 /* marca a chegada dos herois e agenda as missoes e o fim do mundo */
-int inicia_eventos(struct mundo_t *m);
+int inicia_eventos(struct mundo_t *w);
 
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
-void chega(struct mundo_t *m, struct evento_t *ev);
+void chega(struct mundo_t *w, struct evento_t *ev);
 
 /* representa a entrada do heroi na fila de espera */
-void espera(struct mundo_t *m, struct evento_t *ev);
+void espera(struct mundo_t *w, struct evento_t *ev);
 
 /* representa a desistencia de um heroi em esperar para entrar em uma base, e em seguida esse heroi viaja para uma base aleatoria D */
-void desiste(struct mundo_t *m, struct evento_t *ev);
+void desiste(struct mundo_t *w, struct evento_t *ev);
 
 /* representa que o porteiro da dada base eh avisado e verifica a fila de espera */
-void avisa(struct mundo_t *m, struct evento_t *ev);
+void avisa(struct mundo_t *w, struct evento_t *ev);
 
 /* representa a entrada do heroi na determinada base, agendando o tempo que vai permanecer la e quando vai sair */
-void entra(struct mundo_t *m, struct evento_t *ev);
+void entra(struct mundo_t *w, struct evento_t *ev);
 
 /* representa a saida do heroi da base em que estava, escolhendo uma outra base aonde viajar e avisando o porteiro de que ha uma nova vaga disponivel */
-void sai(struct mundo_t *m, struct evento_t *ev);
+void sai(struct mundo_t *w, struct evento_t *ev);
 
 /* representa a viagem do heroi para uma base, agendando e avisando o ponteiro */
-void viaja(struct mundo_t *m, struct evento_t *ev);
+void viaja(struct mundo_t *w, struct evento_t *ev);
 
 /* representa a morte de um heroi, liberando uma nova vaga e avisando o porteiro */
-void morre(struct mundo_t *m, struct evento_t *ev);
+void morre(struct mundo_t *w, struct evento_t *ev);
 
 /* une todas as habilidades dos herois de uma mesma base */
 /* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
@@ -71,13 +71,13 @@ struct cjto_t *skills_b(struct mundo_t *w, int id_b);
 int maior_xp(struct mundo_t *w, int id_b);
 
 /* representa o disparo de uma missao nova no instante T*/
-void evento_missao(struct mundo_t *m, struct evento_t *ev);
+void evento_missao(struct mundo_t *w, struct evento_t *ev);
 
 /* retorna o tempo atual do mundo */
 int tempo_mundo(struct mundo_t *w);
 
 /* representa o fim da simulacao */
-void ev_fim(struct mundo_t *m, struct evento_t *ev);
+void ev_fim(struct mundo_t *w);
 
 void simula_eventos(struct mundo_t *w);
 
