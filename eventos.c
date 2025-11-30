@@ -291,19 +291,6 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         return;
 }
 
-int tempo_mundo(struct mundo_t *w){
-    if (!w)
-        return -1;
-    return w->tempo;
-}
-
-int morte_heroi(struct mundo_t *w, struct evento_t *ev){
-    struct heroi_t *h = w->vet_h[ev->info1];
-    if (!(h->morto))
-        return 0;
-    return 1;
-}
-
 /* representa o fim da simulacao */
 void fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
@@ -351,3 +338,58 @@ void fim(struct mundo_t *w, struct evento_t *ev){
     printf("TAXA MORTALIDADE: %.1f%%", mortalidade);
 }
 
+void simula_eventos(struct mundo_t *w){
+    struct evento_t *ev;
+    int tipo_evento, tempo, id_h;
+    int fim = 0;
+    if (!verifica_mundo(w))
+        return;
+    while (!fim && fprio_tamanho(lef) > 0){
+        ev = fprio_retira(w->lef, &tipo_evento, &tempo);
+        if (!ev)
+            break;
+        if ((tipo_evento <> MISSAO) && (tipo_evento <> AVISA) && (tipo_evento <> FIM)){
+            struct heroi_t *h = w->vet_h[ev->info1];
+            if ((h->morto))
+                free(ev);
+                break;
+        }
+        tempo_mundo(w) = tempo;
+        w->total_eventos++;
+                
+        switch(tipo_evento){        
+            case CHEGA:
+                chega(w, ev);
+                break;
+            case ESPERA:
+                espera(w, ev);
+                break;
+            case DESISTE:
+                desiste(w, ev);
+                break;
+            case MORRE:
+                morre(w, ev);
+                break;
+            case ENTRA:
+                entra(w, ev);
+                break;
+            case SAI:
+                sai(w, ev);
+                break;
+            case VIAJA:
+                viaja(w, ev);
+                break;
+            case AVISA:
+                avisa(w, ev);
+                break;
+            case MISSAO:
+                evento_missao(w, ev);
+                break;
+            case FIM:
+                fim(w, ev);
+                fim = 1;
+        }
+
+    }
+    free(ev);
+}
