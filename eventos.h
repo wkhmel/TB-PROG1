@@ -19,19 +19,15 @@
 /* tem varios tipos, so mudando a informacao passada em info1 e info2 */
 struct evento_t;
 
-/* coordenadas x e y */
-struct coord_t;
+/* adiciona um novo evento, retornando 1 em sucesso e 0 em falha */
+int adiciona_evento(struct mundo_t *w, int tempo, int tipo, int info1, int info2);
 
-/* cria uma nova coordenada */
-struct coord_t cria_coord(int x, int y);
+/* verifica se os ponteiros do mundo nao sao nulos */
+int verifica_mundo(struct mundo_t *w);
 
-/* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
-struct evento_t *cria_evento(struct mundo_t *m, int tipo, int tempo, int info1, int info2);
-
-/* atualiza o tempo do mundo para o do evento */
-void atualiza_tempo(struct mundo_t *m, struct evento_t *ev);
-
-int dist_coord(struct coord_t c1, struct coord_t c2);
+/* inicia a simulacao dos eventos, retornando 1 em sucesso e 0 em falha */
+/* marca a chegada dos herois e agenda as missoes e o fim do mundo */
+int inicia_eventos(struct mundo_t *m);
 
 /* representa um heroi H chegando em uma base B no instante T, para depois esperar para entrar na fila ou desistir */
 void chega(struct mundo_t *m, struct evento_t *ev);
@@ -57,13 +53,17 @@ void viaja(struct mundo_t *m, struct evento_t *ev);
 /* representa a morte de um heroi, liberando uma nova vaga e avisando o porteiro */
 void morre(struct mundo_t *m, struct evento_t *ev);
 
+/* une todas as habilidades dos herois de uma mesma base */
+/* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
+struct cjto_t *skills_b(mundo_t *w, int id_b);
+
+/* retorna o id do heroi de maior xp de uma base cujo id eh passado como parametro */
+int maior_xp(struct mundo_t *w, int id_b);
+
 /* representa o disparo de uma missao nova no instante T*/
 void evento_missao(struct mundo_t *m, struct evento_t *ev);
 
 /* representa o fim da simulacao */
-void fim(struct mundo_t *m);
-
-/* cria os primeiros eventos e agenda o fim do mundo */
-void inicio(struct mundo_t *m);
+void fim(struct mundo_t *m, struct evento_t *ev);
 
 #endif
