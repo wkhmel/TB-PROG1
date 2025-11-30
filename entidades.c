@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "ferramentas.h"
 #include "entidades.h"
 #include "fprio.h"
@@ -70,7 +71,7 @@ struct missao_t *cria_missao(int id){
     m->tentativas = 0;
     m->realizou = false;
     m->local.x = aleat(0, N_TAMANHO_MUNDO - 1);
-    m->local.x = aleat(0, N_TAMANHO_MUNDO - 1);
+    m->local.y = aleat(0, N_TAMANHO_MUNDO - 1);
     return m;
 }
 
