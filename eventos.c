@@ -296,7 +296,7 @@ void fim(struct mundo_t *w, struct evento_t *ev){
             printf("HEROI %2d MORTO ");
         else
             printf("HEROI %2d VIVO ");
-        printf("PAC %3d VEL %4d EXP %4d HABS [ ", i, (w->vet_h[i])->paciencia, (w->vet_h[i])->speed, (w->vet_h[i])->xp);
+        printf("PAC %3d VEL %4d EXP %4d HABS [ ", i, (w->vet_h[i])->paciencia, (w->vet_h[i])->speed, (w->vet_h[i])->exp);
         cjto_imprime((w->vet_h[i])->skills);
         printf(" ]\n");
     }
@@ -338,7 +338,7 @@ void simula_eventos(struct mundo_t *w){
         ev = fprio_retira(w->lef, &tipo_evento, &tempo);
         if (!ev)
             break;
-        if ((tipo_evento <> MISSAO) && (tipo_evento <> AVISA) && (tipo_evento <> FIM)){
+        if ((tipo_evento != MISSAO) && (tipo_evento != AVISA) && (tipo_evento != FIM)){
             struct heroi_t *h = w->vet_h[ev->info1];
             if ((h->morto))
                 free(ev);
