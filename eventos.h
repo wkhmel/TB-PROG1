@@ -67,6 +67,9 @@ int maior_xp(struct mundo_t *w, int id_b);
 /* representa o disparo de uma missao nova no instante T*/
 void evento_missao(struct mundo_t *m, struct evento_t *ev);
 
+/* retorna o tempo atual do mundo */
+int tempo_mundo(struct mundo_t *w)
+
 /* representa o fim da simulacao */
 void fim(struct mundo_t *m, struct evento_t *ev);
 
