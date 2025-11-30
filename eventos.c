@@ -246,9 +246,9 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     ordena_dist(dist, N_BASES);
     int base_missao = -1;
 
-    printf("%6d: MISSAO %d TENT %d HAB REQ: ", tempo, m->id_m, m->tentativas);
+    printf("%6d: MISSAO %d TENT %d HAB REQ: [ ", tempo, m->id_m, m->tentativas);
     cjto_imprime(m->skills);
-    printf("\n");
+    printf(" ]\n");
  
     for (int i = 0; i < w->qtd_b; i++){
         struct cjto_t *uni = skills_b(w, dist[i].id);
@@ -264,7 +264,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         w->missoes_cumpridas++;
         printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [ ", tempo, m->id_m, base_missao);
         cjto_imprime((w->vet_b[base_missao]).presentes);
-        printf("\n");
+        printf(" ]\n");
         /* aumentar xp dos herois */
         for (int j = 0; j < w->qtd_h; j++){
             if (cjto_pertence(w->vet_b[base_missao].presentes, j))
