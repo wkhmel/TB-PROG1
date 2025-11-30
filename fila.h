@@ -3,19 +3,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// descreve um nodo da fila 
+// descreve um nodo da fila
 struct fila_nodo_t
 {
-	int item;					// item associado ao nodo
-	struct fila_nodo_t *prox;	// próximo nodo
+        int item;                                       // item associado ao nodo
+        struct fila_nodo_t *prox;       // próximo nodo
 };
 
-// descreve uma fila 
+// descreve uma fila
 struct fila_t
 {
-	struct fila_nodo_t *prim ;	// primeiro nodo da fila
-	struct fila_nodo_t *ult ;	// último nodo da fila
-	int num ;					// número de itens na fila
+        struct fila_nodo_t *prim ;      // primeiro nodo da fila
+        struct fila_nodo_t *ult ;       // último nodo da fila
+        int num ;                                       // número de itens na fila
 };
 
 // Cria uma fila vazia.
@@ -38,8 +38,7 @@ int fila_retira (struct fila_t *f, int *item);
 // Retorno: N >= 0 ou -1 se erro.
 int fila_tamanho (struct fila_t *f);
 
-// Imprime o conteúdo da fila 
+// Imprime o conteúdo da fila
 void fila_imprime (struct fila_t *f);
 
 #endif
-
