@@ -170,8 +170,8 @@ struct mundo_t *cria_mundo(){
     return w;
 }
 
-struct fprio_t *lef_mundo(struct mundo_t *w){
-    return w->lef;
+int tempo_mundo(struct mundo_t *w){
+    return w->tempo;
 }
 
 struct mundo_t *destroi_mundo(struct mundo_t *w){
