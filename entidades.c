@@ -4,6 +4,7 @@
 #include "fprio.h"
 #include "conjunto.h"
 #include "fila.h"
+#include "ferramentas.h"
 
 struct heroi_t{
     int id_h; /* id do heroi */
