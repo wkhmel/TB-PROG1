@@ -13,7 +13,7 @@ void simula_eventos(struct mundo_t *w){
         ev = fprio_retira(w->lef, &tipo_evento, &tempo);
         if (!ev)
             break;
-        w->tempo = tempo;
+        tempo_mundo(w) = tempo;
         w->total_eventos++;
 
     /* escolhe o evento */
@@ -54,10 +54,4 @@ void simula_eventos(struct mundo_t *w){
         free(ev);
         ev = NULL;
     }
-}
-
-int verifica_tempo(struct mundo_t *w){
-    if (w->tempo >= T_FIM_DO_MUNDO)
-        return 0;
-    return 1;
 }
