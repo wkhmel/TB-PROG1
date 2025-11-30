@@ -213,7 +213,7 @@ int maior_xp(struct mundo_t *w, int id_b){
     int maior = -1;
     int maior_id = -1;
     for (int i = 0; i < w->qtd_h; i++){
-        if (cjto_pertence(w->vet_b[id_b]), i){
+        if (cjto_pertence(w->vet_b[id_b]->presentes), i){
             if ((w->vet_h[i])->exp > maior){
                 maior = (w->vet_h[i])->exp;
                 maior_id = (w->vet_h[i])->id_h;
@@ -293,10 +293,10 @@ void fim(struct mundo_t *w, struct evento_t *ev){
     printf("%6d: FIM", T_FIM_DO_MUNDO);
     for (int i = 0; i < N_HEROIS; i++){
         if ((w->vet_h[i])->morreu)
-            printf("HEROI %2d MORTO ");
+            printf("HEROI %2d MORTO ", i);
         else
-            printf("HEROI %2d VIVO ");
-        printf("PAC %3d VEL %4d EXP %4d HABS [ ", i, (w->vet_h[i])->paciencia, (w->vet_h[i])->speed, (w->vet_h[i])->exp);
+            printf("HEROI %2d VIVO ", i);
+        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (w->vet_h[i])->paciencia, (w->vet_h[i])->speed, (w->vet_h[i])->exp);
         cjto_imprime((w->vet_h[i])->skills);
         printf(" ]\n");
     }
