@@ -41,7 +41,7 @@ struct base_t *cria_base(int id){
         return NULL;
     b->id_b = id;
     b->limite = aleat(3, 10);
-    b->presentes = cjto_cria((b->limite)); /* cria conjunto vazio */
+    b->presentes = cjto_cria(N_HEROIS); /* cria conjunto vazio */
     b->espera = fila_cria(); /* cria fila de espera vazia */
     b->missoes = 0;
     b->max_fila = 0;
