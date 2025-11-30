@@ -292,7 +292,7 @@ void ev_fim(struct mundo_t *w){
     printf("%6d: FIM", T_FIM_DO_MUNDO);
     for (int i = 0; i < N_HEROIS; i++){
         struct heroi_t *h = w->vet_h[i];
-        if (h->morto){
+        if (h->morto)
             printf("HEROI %2d MORTO ", i);
         else
             printf("HEROI %2d VIVO ", i);
