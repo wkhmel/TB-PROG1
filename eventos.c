@@ -297,6 +297,13 @@ int tempo_mundo(struct mundo_t *w){
     return w->tempo;
 }
 
+int morte_heroi(struct mundo_t *w, struct evento_t *ev){
+    struct heroi_t *h = w->vet_h[ev->info1];
+    if (!(h->morto))
+        return 0;
+    return 1;
+}
+
 /* representa o fim da simulacao */
 void fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
