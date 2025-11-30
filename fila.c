@@ -41,11 +41,12 @@ int fila_insere(struct fila_t *f, int item){
                 f->prim = nodo;
         else
                 f->ult->prox = nodo;
+        f->ult = nodo;
         f->num++;
         return 1;
 }
 
-/* retira um elemento do fim da fila, por ordem de chegada */
+/* retira um elemento do comeco da fila, por ordem de chegada */
 int fila_retira(struct fila_t *f, int *item){
         if (!(f) || !(item) || f->num == 0)
                 return 0;
