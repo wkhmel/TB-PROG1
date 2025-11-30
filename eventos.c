@@ -91,7 +91,7 @@ void espera(struct mundo_t *w, struct evento_t *ev){
     if (!adiciona_evento(w, tempo, AVISA, h->id_h, b->id_b))
         return;
     int atual = fila_tamanho(b->espera);
-    if (atual > b->fila_max)
+    if (atual > b->max_fila)
         b->max_fila = atual;
     printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));    
 }
@@ -228,7 +228,6 @@ int maior_xp(struct mundo_t *w, int id_b){
 /* representa o disparo de uma missao nova no instante T*/
 void evento_missao(struct mundo_t *w, struct evento_t *ev){
     struct missao_t *m = w->vet_m[ev->info1];
-    struct base_t *b;
     struct dist_base dist[N_BASES]; /* struct de distancia de cada base ate a missao */
     int tempo = ev->tempo;    
     if (!verifica_mundo(w) || m->realizou)
@@ -287,15 +286,13 @@ int tempo_mundo(struct mundo_t *w){
 
 /* representa o fim da simulacao */
 void ev_fim(struct mundo_t *w){
-    struct heroi_t *h;
-    struct base_t *b;
-    
     if (!verifica_mundo(w))
         return;
 
     printf("%6d: FIM", T_FIM_DO_MUNDO);
     for (int i = 0; i < N_HEROIS; i++){
-        if ((w->vet_h[i])->morto)
+        struct heroi_t *h = w->vet_h[i];
+        if (h->morto){
             printf("HEROI %2d MORTO ", i);
         else
             printf("HEROI %2d VIVO ", i);
