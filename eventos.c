@@ -279,6 +279,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         if (heroi_sacrificado != -1) { /* consome se tiver um heroi para usar */
             w->qtd_v--;
             m->realizou = true;
+            w->vet_b[b_proxima].missoes++;
             w->missoes_cumpridas++; /* missao cumprida */
             /* agenda a morte do heroi */
             adiciona_evento(w, tempo, MORRE, heroi_sacrificado, m->id_m);
@@ -305,15 +306,15 @@ void ev_fim(struct mundo_t *w){
     if (!verifica_mundo(w))
         return;
 
-    printf("%6d: FIM", T_FIM_DO_MUNDO);
+    printf("%6d: FIM\n", T_FIM_DO_MUNDO);
     for (int i = 0; i < N_HEROIS; i++){
         struct heroi_t *h = &w->vet_h[i];
         if (h->morto)
             printf("HEROI %2d MORTO ", i);
         else
             printf("HEROI %2d VIVO ", i);
-        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (w->vet_h[i]).paciencia, (w->vet_h[i]).speed, (w->vet_h[i]).exp);
-        cjto_imprime((w->vet_h[i]).skills);
+        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (h.paciencia, h.speed, h.exp);
+        cjto_imprime(h.skills);
         printf(" ]\n");
     }
 
@@ -321,7 +322,7 @@ void ev_fim(struct mundo_t *w){
         struct base_t *base = &w->vet_b[i];
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->max_fila, base->missoes);
     }
-    float taxa_missoes = (float)(w->missoes_cumpridas)/(N_MISSOES)*100.0;
+    float taxa_missoes = ((float)w->missoes_cumpridas / N_MISSOES) * 100.0;
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
@@ -331,15 +332,15 @@ void ev_fim(struct mundo_t *w){
     }
     int min_tentativas = max_tentativas;
     for (int a = 0; a < w->qtd_m; a++){
-        if (min_tentativas > (w->vet_m[a]).tentativas)
-            min_tentativas = (w->vet_m[a]).tentativas;
-    }     
+            if ((w->vet_m[a]).tentativas < min_tentativas && (w->vet_m[a]).tentativas > 0)
+                min_tentativas = (w->vet_m[a]).tentativas;
+    }
     int soma = 0;
     for (int a = 0; a < w->qtd_m; a++){
         soma = soma + (w->vet_m[a]).tentativas;
     }            
     float media = (float)soma/w->qtd_m;
-    float mortalidade = (float)w->mortes/w->qtd_h;
+    float mortalidade =  ((float)w->mortes / w->qtd_h) * 100.0;
     printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f\n", min_tentativas, max_tentativas, media);
     printf("TAXA MORTALIDADE: %.1f%%\n", mortalidade);
 }
