@@ -32,7 +32,7 @@ int adiciona_evento(struct mundo_t *w, int tempo, int tipo, int info1, int info2
 }
 
 int verifica_mundo(struct mundo_t *w){
-    if (!w || !w->vet_h || !w->vet_b || !w->vet_m)
+    if (!w || !w->vet_h || !w->vet_b || !w->vet_m || !w->lef)
         return 0;
     return 1;
 }
