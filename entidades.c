@@ -31,7 +31,6 @@ struct heroi_t *destroi_heroi(struct heroi_t *h){
         return NULL;
     if (h->skills)
         cjto_destroi(h->skills);
-    free(h);
     return NULL;
 }
 
@@ -57,7 +56,6 @@ struct base_t *destroi_base(struct base_t *b){
         cjto_destroi(b->presentes);
     if (b->espera)
         fila_destroi(b->espera);
-    free(b);
     return NULL;
 }
 
@@ -80,7 +78,6 @@ struct missao_t *destroi_missao(struct missao_t *m){
         return NULL;
     if (m->skills)
         cjto_destroi(m->skills);
-    free(m);
     return NULL;
 }
 
@@ -139,15 +136,19 @@ struct mundo_t *destroi_mundo(struct mundo_t *w){
     for (int i = 0; i < w->qtd_h; i++){
         destroi_heroi(&w->vet_h[i]);
     }
-
+    /* libera o vetor inteiro */
+    free(w->vet_h);
+    
     for (int i = 0; i < w->qtd_b; i++){
         destroi_base(&w->vet_b[i]);
     }
-
+    free(w->vet_b);
+    
     for (int i = 0; i < w->qtd_m; i++){
         destroi_missao(&w->vet_m[i]);
     }
-
+    free(w->vet_m);
+    
     fprio_destroi(w->lef);
 
     free(w);
