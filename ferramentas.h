@@ -17,6 +17,6 @@ long aleat(long min, long max);
 
 int dist_coord(struct coord_t c1, struct coord_t c2);
 
-void ordena_dist(int vet_dist[], int vet_id[], int qtd);
+void ordena_dist(struct dist_base v[], int qtd);
 
 #endif
