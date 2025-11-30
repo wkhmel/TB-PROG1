@@ -91,8 +91,8 @@ void espera(struct mundo_t *w, struct evento_t *ev){
     if (!adiciona_evento(w, tempo, AVISA, h->id_h, b->id_b))
         return;
     int atual = fila_tamanho(b->espera);
-    if (atual > b->fila_max)
-        b->fila_max = atual;
+    if (atual > b->max_fila)
+        b->max_fila = atual;
     printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));   
 }
 
@@ -307,7 +307,7 @@ void fim(struct mundo_t *w, struct evento_t *ev){
 
     for (int i = 0; i < N_BASES; i++){
         struct base_t *base = w->vet_b[i];
-        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d", i, base->limite, base->fila_max, base->missoes);
+        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d", i, base->limite, base->max_fila, base->missoes);
     }
     float taxa_missoes = (w->missoes_cumpridas)/(N_MISSOES);
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
