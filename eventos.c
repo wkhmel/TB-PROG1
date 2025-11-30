@@ -167,9 +167,9 @@ void viaja(struct mundo_t *w, struct evento_t *ev){
     int tempo = ev->tempo;
     if (!verifica_mundo(w))
         return;
-    distancia = dist_coord(b->local, d->local);
+    int distancia = dist_coord(b->local, d->local);
     int duracao = distancia/(h->speed);
-    if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b)
+    if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b))
         return;
     printf("%6d: VIAJA HEROI %2d BASE %d BASE %d DIST %d VEL %d CHEGA %d", tempo, h->id_h, b->id_b, d->id_b, distancia, h->speed, tempo + duracao); 
 }
@@ -178,7 +178,7 @@ void viaja(struct mundo_t *w, struct evento_t *ev){
 void morre(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h = w->vet_h[ev->info1];
     struct base_t *b = w->vet_b[h->id_b];
-    struct missao_t *m = w->vet_m[ev->info2].
+    struct missao_t *m = w->vet_m[ev->info2];
     int tempo = ev->tempo;
     if (!verifica_mundo(w) || !b->presentes || h->morto)
         return;
