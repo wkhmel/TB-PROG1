@@ -3,7 +3,7 @@
 #include "fprio.h"
 #include "entidades.h"
 
-void simular_eventos(struct mundo_t *w){
+void simula_eventos(struct mundo_t *w){
     struct evento_t *ev;
     int tipo_evento, tempo, id_h;
     int fim = 0;
