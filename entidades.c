@@ -94,9 +94,9 @@ struct mundo_t *cria_mundo(){
     w->qtd_b = N_BASES;
     w->qtd_m = N_MISSOES;
 
-    w->vet_h = malloc(w->qtd_h(sizeof(struct heroi_t));
-    w->vet_b = malloc(w->qtd_b(sizeof(struct base_t));
-    w->vet_m = malloc(w->qtd_m(sizeof(struct missao_t));
+    w->vet_h = malloc(w->qtd_h*(sizeof(struct heroi_t)));
+    w->vet_b = malloc(w->qtd_b*(sizeof(struct base_t)));
+    w->vet_m = malloc(w->qtd_m*(sizeof(struct missao_t)));
 
     if (!w->vet_h || !w->vet_b || !w->vet_m){
         destroi_mundo(w);
