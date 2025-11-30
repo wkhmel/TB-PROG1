@@ -286,7 +286,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
                 if (cjto_pertence(w->vet_b[b_proxima].presentes, j))
                     (w->vet_h[j]).exp++;
             }
-            printf("%6d: MISSAO %d CUMPRIDA BASE %d COMPOSTO V HEROI %d\n", tempo, m->id_m, base_mais_proxima, heroi_sacrificado);
+            printf("%6d: MISSAO %d CUMPRIDA BASE %d COMPOSTO V HEROI %d\n", tempo, m->id_m, b_proxima, heroi_sacrificado);
             return;
         }
     }
