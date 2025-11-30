@@ -5,8 +5,7 @@
 #include "simulacao.h"
 #include "ferramentas.h"
 #include "eventos.h"
-
-// minimize o uso de variáveis globais
+#include "fprio.h"
 
 // programa principal
 int main ()
@@ -14,20 +13,15 @@ int main ()
   // iniciar o mundo
   struct mundo_t *w;
   struct evento_t *ev;
-  
+  srand(0);
   // executar o laço de simulação
   w = cria_mundo();
-  inicia_eventos(w);
   while (w->tempo < T_FIM_DO_MUNDO){
-    /*Retira o primeiro evento da lista de eventos futuros*/
-    ev = retira_lef(retorna_evento(mundo));
-    atualiza_relogio(w, ev);
-    /*Chama a função que trata o evento*/
+    inicia_eventos(w);
+    atualiza_tempo(w, ev);
     simula_eventos(w);
-    /*Liberta a memoria do evento*/
     destroi_evento(ev);
   }
-  
   // destruir o mundo
   destroi_mundo(w);
   return 0;
