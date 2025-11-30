@@ -55,7 +55,7 @@ void morre(struct mundo_t *m, struct evento_t *ev);
 
 /* une todas as habilidades dos herois de uma mesma base */
 /* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
-struct cjto_t *skills_b(mundo_t *w, int id_b);
+struct cjto_t *skills_b(struct mundo_t *w, int id_b);
 
 /* retorna o id do heroi de maior xp de uma base cujo id eh passado como parametro */
 int maior_xp(struct mundo_t *w, int id_b);
