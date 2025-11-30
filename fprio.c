@@ -25,7 +25,6 @@ struct fprio_t *fprio_destroi (struct fprio_t *f){
                         aux_atual = aux_prox;
                 }
                 free(f);
-                f = NULL;
         }
         return NULL;
 }
@@ -50,23 +49,21 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio){
         nodo->prox = NULL;
         struct fpnodo_t *aux_ant = NULL;
         struct fpnodo_t *aux = f->prim;
-        /* insere no inicio */
+
+        while (aux != NULL && prio >= aux->prio){
+                aux_ant = aux;
+                aux = aux->prox;
+        }
         if (!aux_ant){
                 nodo->prox = f->prim;
                 f->prim = nodo;
         }
-        /* insere no final */
-        if (prio >= f->fim->prio){
-                f->fim->prox = nodo;
+        else{
+                nodo->prox = aux;
+                aux_ant->prox = nodo;
+        }
+        if (!nodo->prox)
                 f->fim = nodo;
-        }
-        while (aux != NULL && aux->prio <= prio){
-                aux_ant = aux;
-                aux = aux->prox;
-        }
-        nodo->prox = aux;
-        aux_ant->prox = nodo;
-
         f->num++;
         return f->num;
 }
@@ -83,6 +80,9 @@ void *fprio_retira (struct fprio_t *f, int *tipo, int *prio){
         void *item = aux->item;
         f->prim = aux->prox;
         free(aux);
+        f->num--;
+        if (!f->prim)
+                f->fim = NULL;
         return item;
 }
 
@@ -105,3 +105,4 @@ void fprio_imprime (struct fprio_t *f){
         }
         printf("(%d %d)", aux->tipo, aux->prio);
 }
+
