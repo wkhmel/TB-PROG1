@@ -2,7 +2,6 @@
 #include "eventos.h"
 #include "fprio.h"
 #include "entidades.h"
-#include "ferramentas.h" 
 
 void simula_eventos(struct mundo_t *w){
     struct evento_t *ev;
