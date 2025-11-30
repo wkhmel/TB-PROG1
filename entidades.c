@@ -24,16 +24,16 @@ struct heroi_t *cria_heroi(int id){
     return h;
 }
 
-/* funcao que destroi o heroi e todas as suas estruturas e devolve o id do heroi em um ponteiro. */
-/* retorna NULL. */
+/* funcao que destroi o heroi e todas as suas estruturas e retorna NULL. */
 struct heroi_t *destroi_heroi(struct heroi_t *h){
     if (!h)
         return NULL;
     if (h->skills)
-        cjto_destroi(h->skills);
+        cjto_destroi(h->skills); /* destroi o cjto de habilidades que foi alocado dinamicamente */
     return NULL;
 }
 
+/* cria uma base */
 struct base_t *cria_base(int id){
     struct base_t *b;
     b = malloc(sizeof(struct base_t));
@@ -41,7 +41,7 @@ struct base_t *cria_base(int id){
         return NULL;
     b->id_b = id;
     b->limite = aleat(3, 10);
-    b->presentes = cjto_cria(N_HEROIS); /* cria conjunto vazio */
+    b->presentes = cjto_cria(N_HEROIS); /* cria conjunto vazio com capacidade para ate N_HEROIS */
     b->espera = fila_cria(); /* cria fila de espera vazia */
     b->missoes = 0;
     b->max_fila = 0;
@@ -49,6 +49,7 @@ struct base_t *cria_base(int id){
     return b;
 }
 
+/* destroi todas as estruturas da base */
 struct base_t *destroi_base(struct base_t *b){
     if (!b)
         return NULL;
@@ -59,13 +60,16 @@ struct base_t *destroi_base(struct base_t *b){
     return NULL;
 }
 
+/* cria uma missao */
 struct missao_t *cria_missao(int id){
     struct missao_t *m;
     m = malloc(sizeof(struct missao_t));
     if (!m)
         return NULL;
     m->id_m = id;
-    m->skills = cjto_aleat(aleat(6,10), N_HABILIDADES);
+    /* cria um cjto aleatorio de habilidades, que pode ter de 6 a 10 e */
+    /* eh selecionado entre todas as 10 habilidades do mundo */
+    m->skills = cjto_aleat(aleat(6,10), N_HABILIDADES); 
     m->tentativas = 0;
     m->realizou = false;
     m->local.x = aleat(0, N_TAMANHO_MUNDO - 1);
@@ -73,6 +77,7 @@ struct missao_t *cria_missao(int id){
     return m;
 }
 
+/* destroi a missao e o conjunto de habilidades dinamicamente alocado */
 struct missao_t *destroi_missao(struct missao_t *m){
     if (!m)
         return NULL;
@@ -81,7 +86,7 @@ struct missao_t *destroi_missao(struct missao_t *m){
     return NULL;
 }
 
-/* inicializacao */
+/* inicializacao do mundo */
 struct mundo_t *cria_mundo(){
     struct mundo_t *w;
     w = malloc(sizeof(struct mundo_t));
@@ -91,15 +96,19 @@ struct mundo_t *cria_mundo(){
     w->qtd_b = N_BASES;
     w->qtd_m = N_MISSOES;
 
+    /* libera os espacos na memoria para todos os vetores */
+    /* nas respectivas quantidades */
     w->vet_h = malloc(w->qtd_h*(sizeof(struct heroi_t)));
     w->vet_b = malloc(w->qtd_b*(sizeof(struct base_t)));
     w->vet_m = malloc(w->qtd_m*(sizeof(struct missao_t)));
 
+    /* se houver algum erro em algum desses vetores, destroi o mundo */
     if (!w->vet_h || !w->vet_b || !w->vet_m){
         destroi_mundo(w);
         return NULL;
     }
-    
+
+    /* usa um struct auxiliar para criar um heroi e colocar no vetor daquele indice */
     for (int i = 0; i < w->qtd_h; i++){
         struct heroi_t *aux = cria_heroi(i);
         w->vet_h[i] = *aux;
@@ -130,6 +139,7 @@ struct mundo_t *cria_mundo(){
     return w;
 }
 
+/* destroi o mundo e todos os vetores */
 struct mundo_t *destroi_mundo(struct mundo_t *w){
     if (!w)
         return NULL;
