@@ -1,9 +1,7 @@
 #ifndef FERRAMENTAS_H
 #define FERRAMENTAS_H
 #include <math.h>
-#include <stdio.h>
-#include "entidades.h"
-#include "eventos.h"
+#include <stdlib.h>
 
 struct coord_t;
 
