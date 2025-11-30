@@ -170,6 +170,10 @@ struct mundo_t *cria_mundo(){
     return w;
 }
 
+struct fprio_t *lef_mundo(struct mundo_t *w){
+    return w->lef;
+}
+
 struct mundo_t *destroi_mundo(struct mundo_t *w){
     if (!w)
         return NULL;
