@@ -202,7 +202,7 @@ void morre(struct mundo_t *w, struct evento_t *ev){
 
 /* une todas as habilidades dos herois de uma mesma base */
 /* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
-struct cjto_t *skills_b(mundo_t *w, int id_b){
+struct cjto_t *skills_b(struct mundo_t *w, int id_b){
     if (!verifica_mundo(w))
         return;
     struct cjto_t *uniao = cjto_cria(N_HABILIDADES); /* cria um conjunto vazio com capacidade para ate N_HABILIDADES */
