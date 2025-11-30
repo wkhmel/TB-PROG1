@@ -2,7 +2,6 @@
 // Autor: Melissa Goulart Kemp, GRR 20255413
 #include <stdlib.h>
 #include "entidades.h"
-#include "simulacao.h"
 #include "eventos.h"
 #include "fprio.h"
 
