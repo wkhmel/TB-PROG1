@@ -206,6 +206,7 @@ struct cjto_t *skills_b(struct mundo_t *w, int id_b){
         if (cjto_pertence(b->presentes, i)){
             struct cjto_t *antigo = uniao;
             uniao = cjto_uniao(antigo, (w->vet_h[i]).skills);
+            cjto_destroi(antigo);
     }
     return uniao;
 }
