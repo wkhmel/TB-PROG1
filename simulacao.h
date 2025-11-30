@@ -6,6 +6,4 @@
 
 void simula_eventos(struct mundo_t *w);
 
-int verifica_tempo(struct mundo_t *w);
-
 #endif
