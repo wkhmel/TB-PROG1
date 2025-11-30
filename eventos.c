@@ -322,8 +322,8 @@ void fim(struct mundo_t *w, struct evento_t *ev){
     for (a = 0; a < w->qtd_m; a++){
         soma = soma + (w->vet_m[a])->tentativas;
     }            
-    float media = soma/(w->qtd_m);
-    float mortalidade = (w->mortes)/(w->qtd_h);
+    float media = (float)soma/w->qtd_m;
+    float mortalidade = (float)w->mortes/w->qtd_h;
     printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f", min_tentativas, max_tentativas, media);
     printf("TAXA MORTALIDADE: %.1f%%", mortalidade);
 }
