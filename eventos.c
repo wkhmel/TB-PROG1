@@ -381,7 +381,6 @@ void simula_eventos(struct mundo_t *w){
                 ev_fim(w, ev);
                 fim = 1;
         }
-
+        free(ev);
     }
-    free(ev);
 }
