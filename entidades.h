@@ -1,8 +1,12 @@
 #ifndef ENTIDADES_H
 #define ENTIDADES_H
+#include <stdio.h>
+#include <stdlib.h>
+#include "entidades.h"
 #include "fprio.h"
 #include "conjunto.h"
 #include "fila.h"
+#include "ferramentas.h"
 #define T_INICIO 0
 #define T_FIM_DO_MUNDO 525600
 #define N_TAMANHO_MUNDO 20000
