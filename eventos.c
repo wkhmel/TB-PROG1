@@ -36,14 +36,14 @@ int inicia_eventos(struct mundo_t *w){
     for (int i = 0; i < w->qtd_h; i++){
         base = aleat(0, w->qtd_b - 1);
         tempo = aleat(0, 4320);
-        if (!(adiciona_evento(w, tempo, CHEGA, (w->vet_h[i]).id_h, base)))
+        if (!(adiciona_evento(w, tempo, CHEGA, (w->vet_h[i])->id_h, base)))
             return 0;
     }
 
 /* agendamento das missoes */
     for (int i = 0; i < w->qtd_m; i++){
         tempo = aleat(0, T_FIM_DO_MUNDO);
-        if (!(adiciona_evento(w, tempo, MISSAO, (w->vet_m[i]).id_m, -1)))
+        if (!(adiciona_evento(w, tempo, MISSAO, (w->vet_m[i])->id_m, -1)))
             return 0;
     }
 
@@ -171,7 +171,7 @@ void viaja(struct mundo_t *w, struct evento_t *ev){
     int duracao = distancia/(h->speed);
     if (!adiciona_evento(w, tempo + duracao, CHEGA, h->id_h, d->id_b))
         return;
-    printf("%6d: VIAJA HEROI %2d BASE %d BASE %d DIST %d VEL %d CHEGA %d", tempo, h->id_h, b->id_b, d->id_b, distancia, h->speed, tempo + duracao); 
+    printf("%6d: VIAJA HEROI %2d BASE %d BASE %d DIST %d VEL %d CHEGA %d\n", tempo, h->id_h, b->id_b, d->id_b, distancia, h->speed, tempo + duracao); 
 }
 
 /* representa a morte de um heroi, liberando uma nova vaga e avisando o porteiro */
@@ -201,8 +201,8 @@ struct cjto_t *skills_b(struct mundo_t *w, int id_b){
         return NULL;
     
     for (int i = 0; i < w->qtd_h; i++){
-        if (cjto_pertence((w->vet_b[id_b]).presentes, i))
-            uniao = cjto_uniao(uniao, (w->vet_h[i]).skills);
+        if (cjto_pertence((w->vet_b[id_b])->presentes, i))
+            uniao = cjto_uniao(uniao, (w->vet_h[i])->skills);
     }
     return uniao;
 }
@@ -213,10 +213,10 @@ int maior_xp(struct mundo_t *w, int id_b){
     int maior = -1;
     int maior_id = -1;
     for (int i = 0; i < w->qtd_h; i++){
-        if (cjto_pertence(w->vet_b[id_b].presentes), i){
-            if ((w->vet_h[i]).exp > maior){
-                maior = (w->vet_h[i]).exp;
-                maior_id = (w->vet_h[i]).id_h;
+        if (cjto_pertence(w->vet_b[id_b]->presentes, i)){
+            if ((w->vet_h[i])->exp > maior){
+                maior = (w->vet_h[i])->exp;
+                maior_id = (w->vet_h[i])->id_h;
             }
         }
 
@@ -237,7 +237,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     /* verifica a distancia de cada base em relacao ao local da missao */
     for (int i = 0; i < N_BASES; i++){
         dist[i].id = i;
-        dist[i].distancia = dist_coord(m->local, (w->vet_b[i]).local);
+        dist[i].distancia = dist_coord(m->local, (w->vet_b[i])->local);
     }
     ordena_dist(dist, N_BASES);
     int base_missao = -1;
@@ -256,15 +256,15 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
 
     if (base_missao >= 0){
         m->realizou = true;
-        (w->vet_b[base_missao]).missoes++;
+        (w->vet_b[base_missao])->missoes++;
         w->missoes_cumpridas++;
         printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [ ", tempo, m->id_m, base_missao);
-        cjto_imprime((w->vet_b[base_missao]).presentes);
+        cjto_imprime((w->vet_b[base_missao])->presentes);
         printf("\n");
         /* aumentar xp dos herois */
-        for (j = 0; j < w->qtd_h; j++){
-            if (cjto_pertence((w->vet_b[base_missao]).presentes, j))
-                (w->vet_h[j]).exp++;
+        for (int j = 0; j < w->qtd_h; j++){
+            if (cjto_pertence((w->vet_b[base_missao]->presentes, j)))
+                (w->vet_h[j])->exp++;
         }
         return;
     }
@@ -275,9 +275,9 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         return;
     }
 
-    printf("%6d: MISSAO %d IMPOSSIVEL", tempo, m->id_m);
+    printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, m->id_m);
     /* coloca na agenda de novo */
-    if (!adiciona_evento(w, tempo + 24*60, EV_MISSAO, m->id_m, -1));
+    if (!adiciona_evento(w, tempo + 24*60, MISSAO, m->id_m, -1))
         return;
 }
 
@@ -295,40 +295,40 @@ void fim(struct mundo_t *w, struct evento_t *ev){
 
     printf("%6d: FIM", T_FIM_DO_MUNDO);
     for (int i = 0; i < N_HEROIS; i++){
-        if ((w->vet_h[i]).morto)
+        if ((w->vet_h[i])->morto)
             printf("HEROI %2d MORTO ", i);
         else
             printf("HEROI %2d VIVO ", i);
-        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (w->vet_h[i]).paciencia, (w->vet_h[i]).speed, (w->vet_h[i]).exp);
-        cjto_imprime((w->vet_h[i]).skills);
+        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (w->vet_h[i])->paciencia, (w->vet_h[i])->speed, (w->vet_h[i])->exp);
+        cjto_imprime((w->vet_h[i])->skills);
         printf(" ]\n");
     }
 
     for (int i = 0; i < N_BASES; i++){
         struct base_t *base = w->vet_b[i];
-        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d", i, base->limite, base->fila_max, base->missoes);
+        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->fila_max, base->missoes);
     }
     float taxa_missoes = (w->missoes_cumpridas)/(N_MISSOES);
-    printf("EVENTOS TRATADOS: %d", w->total_eventos);
-    printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
+    printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
+    printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
     for (a = 0; a < w->qtd_m; a++){
-        if (((w->vet_m[a]).tentativas) > max_tentativas)
-            max_tentativas = (w->vet_m[a]).tentativas;
+        if (((w->vet_m[a])->tentativas) > max_tentativas)
+            max_tentativas = (w->vet_m[a])->tentativas;
     }
     int min_tentativas = max_tentativas;
     for (a = 0; a < w->qtd_m; a++){
-        if (min_tentativas > (w->vet_m[a]).tentativas)
-            min_tentativas = (w->vet_m[a]).tentativas;
+        if (min_tentativas > (w->vet_m[a])->tentativas)
+            min_tentativas = (w->vet_m[a])->tentativas;
     }     
     int soma = 0;
     for (a = 0; a < w->qtd_m; a++){
-        soma = soma + (w->vet_m[a]).tentativas;
+        soma = soma + (w->vet_m[a])->tentativas;
     }            
     float media = (float)soma/w->qtd_m;
     float mortalidade = (float)w->mortes/w->qtd_h;
-    printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f", min_tentativas, max_tentativas, media);
-    printf("TAXA MORTALIDADE: %.1f%%", mortalidade);
+    printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f\n", min_tentativas, max_tentativas, media);
+    printf("TAXA MORTALIDADE: %.1f%%\n", mortalidade);
 }
 
 void simula_eventos(struct mundo_t *w){
