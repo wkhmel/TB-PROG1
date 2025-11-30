@@ -104,7 +104,7 @@ void desiste(struct mundo_t *w, struct evento_t *ev){
     if (!verifica_mundo(w))
         return;
     int base_destino = aleat(0, w->qtd_b - 1);
-    if (!adiciona_evento(w, tempo, VIAJA, h->id_h, b->id_b))
+    if (!adiciona_evento(w, tempo, VIAJA, h->id_h, base_destino))
         return;
     printf("%6d: DESIST HEROI %2d BASE %d\n", tempo, h->id_h, b->id_b);
 }
@@ -276,7 +276,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
 
     printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, m->id_m);
     /* coloca na agenda de novo */
-    if (!adiciona_evento(w, tempo + 24*60, EV_MISSAO, m->id_m, -1))
+    if (!adiciona_evento(w, tempo + 24*60, MISSAO, m->id_m, -1))
         return;
 }
 
@@ -286,7 +286,6 @@ int tempo_mundo(struct mundo_t *w){
 
 /* representa o fim da simulacao */
 void ev_fim(struct mundo_t *w, struct evento_t *ev){
-    struct heroi_t *h;
     if (!verifica_mundo(w))
         return;
 
@@ -331,7 +330,7 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
 void simula_eventos(struct mundo_t *w){
     struct evento_t *ev;
     int tipo_evento, tempo, fim;
-    int fim = 0;
+    fim = 0;
     if (!verifica_mundo(w))
         return;
     while (!fim && fprio_tamanho(w->lef) > 0){
