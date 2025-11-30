@@ -342,9 +342,10 @@ void simula_eventos(struct mundo_t *w){
             break;
         if ((tipo_evento != MISSAO) && (tipo_evento != AVISA) && (tipo_evento != FIM)){
             struct heroi_t *h = w->vet_h[ev->info1];
-            if (h->morto)
+            if (h->morto){
                 free(ev);
                 continue;
+            }
         }
         w->tempo = tempo;
         w->total_eventos++;
