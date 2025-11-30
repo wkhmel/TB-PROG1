@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "entidades.h"
 #include "eventos.h"
-#include "theboys.h"
 #include "fprio.h"
+#include "conjunto.h"
 #include "fila.h"
-#include <math.h>
+#include "ferramentas.h"
 
 /* representa um evento com todas as informacoes possiveis, as quais */
 /* podem ser utilizadas ou nao. */
