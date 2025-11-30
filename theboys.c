@@ -14,7 +14,7 @@ int main (){
   srand(0);
   // executar o laço de simulação
   w = cria_mundo();
-  while (verifica_tempo(w)){
+  while (tempo_mundo(w)){
     inicia_eventos(w);
     simula_eventos(w);
     destroi_evento(ev);
