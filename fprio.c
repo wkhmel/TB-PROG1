@@ -56,7 +56,7 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio){
 	/* verifica se nao ha ponteiros repetidos */	
 	struct fpnodo_t *temp = f->prim;
 	while (aux != NULL){
-		if ((temp->tipo == tipo) && (temp->prio == prio))
+		if (temp->item == item)
 			return -1;
 		temp = temp->prox;
 	}
@@ -121,3 +121,4 @@ void fprio_imprime (struct fprio_t *f){
 	}
 	printf("(%d %d)", aux->tipo, aux->prio);
 }
+
