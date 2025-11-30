@@ -7,16 +7,6 @@
 #include "fila.h"
 #include "ferramentas.h"
 
-/* representa um evento com todas as informacoes possiveis, as quais */
-/* podem ser utilizadas ou nao. */
-/* causara mudancas de estado na simulacao discreta. */
-struct evento_t{
-    int tempo;
-    int tipo;
-    int info1;
-    int info2; 
-};
-
 /* cria um novo evento, retornando um ponteiro para ele ou NULL em caso de erro */
 int adiciona_evento(struct mundo_t *w, int tempo, int tipo, int info1, int info2){
     struct evento_t *ev = malloc(sizeof(struct evento_t));
