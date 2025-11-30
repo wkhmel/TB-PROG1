@@ -286,7 +286,7 @@ int tempo_mundo(struct mundo_t *w){
 }
 
 /* representa o fim da simulacao */
-void ev_fim(struct mundo_t *w, struct evento_t *ev){
+void ev_fim(struct mundo_t *w){
     if (!verifica_mundo(w))
         return;
 
@@ -377,7 +377,7 @@ void simula_eventos(struct mundo_t *w){
                 evento_missao(w, ev);
                 break;
             case FIM:
-                ev_fim(w, ev);
+                ev_fim(w);
                 fim = 1;
         }
 
