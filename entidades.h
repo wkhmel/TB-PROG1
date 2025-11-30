@@ -2,7 +2,6 @@
 #define ENTIDADES_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "entidades.h"
 #include "fprio.h"
 #include "conjunto.h"
 #include "fila.h"
