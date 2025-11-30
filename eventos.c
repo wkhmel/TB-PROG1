@@ -48,7 +48,7 @@ int inicia_eventos(struct mundo_t *w){
     }
 
 /* agendamento do fim do mundo */
-    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1));
+    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1))
         return 0;
     return 1;
 }
@@ -195,7 +195,7 @@ void morre(struct mundo_t *w, struct evento_t *ev){
 /* verifica se o heroi esta naquela base e, se sim, adiciona suas habilidades ao conjunto */
 struct cjto_t *skills_b(struct mundo_t *w, int id_b){
     if (!verifica_mundo(w))
-        return;
+        return NULL;
     struct cjto_t *uniao = cjto_cria(N_HABILIDADES); /* cria um conjunto vazio com capacidade para ate N_HABILIDADES */
     if (!uniao)
         return NULL;
@@ -263,7 +263,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         printf("\n");
         /* aumentar xp dos herois */
         for (int j = 0; j < w->qtd_h; j++){
-            if (cjto_pertence((w->vet_b[base_missao]->presentes, j)))
+            if (cjto_pertence(w->vet_b[base_missao]->presentes, j))
                 (w->vet_h[j])->exp++;
         }
         return;
@@ -271,7 +271,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     if ((w->qtd_v > 0) && (tempo%2500 == 0)){
         w->qtd_v--;
         m->realizou = true;
-        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0)
+        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0);
         return;
     }
 
@@ -290,7 +290,7 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h;
     struct base_t *b;
     
-    if (!verifica_mundo)
+    if (!verifica_mundo(w))
         return;
 
     printf("%6d: FIM", T_FIM_DO_MUNDO);
@@ -336,7 +336,7 @@ void simula_eventos(struct mundo_t *w){
     int tipo_evento, tempo, fim = 0;
     if (!verifica_mundo(w))
         return;
-    while (!fim && fprio_tamanho(lef) > 0){
+    while (!fim && fprio_tamanho(w->lef) > 0){
         ev = fprio_retira(w->lef, &tipo_evento, &tempo);
         if (!ev)
             break;
@@ -344,9 +344,9 @@ void simula_eventos(struct mundo_t *w){
             struct heroi_t *h = w->vet_h[ev->info1];
             if (h->morto)
                 free(ev);
-                break;
+                continue;
         }
-        tempo_mundo(w) = tempo;
+        w->tempo = tempo;
         w->total_eventos++;
                 
         switch(tipo_evento){        
@@ -378,7 +378,7 @@ void simula_eventos(struct mundo_t *w){
                 evento_missao(w, ev);
                 break;
             case FIM:
-                fim(w, ev);
+                ev_fim(w, ev);
                 fim = 1;
         }
 
