@@ -305,7 +305,7 @@ void ev_fim(struct mundo_t *w){
         struct base_t *base = &w->vet_b[i];
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->max_fila, base->missoes);
     }
-    float taxa_missoes = (float)(w->missoes_cumpridas)/(N_MISSOES);
+    float taxa_missoes = (float)(w->missoes_cumpridas)/(N_MISSOES)*100.0;
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
