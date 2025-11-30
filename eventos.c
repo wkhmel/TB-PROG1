@@ -199,10 +199,13 @@ struct cjto_t *skills_b(struct mundo_t *w, int id_b){
     struct cjto_t *uniao = cjto_cria(N_HABILIDADES); /* cria um conjunto vazio com capacidade para ate N_HABILIDADES */
     if (!uniao)
         return NULL;
+
+    struct base_t *b = &w->vet_b[id_b];
     
     for (int i = 0; i < w->qtd_h; i++){
-        if (cjto_pertence((w->vet_b[id_b]).presentes, i))
-            uniao = cjto_uniao(uniao, (w->vet_h[i]).skills);
+        if (cjto_pertence(b->presentes, i)){
+            struct cjto_t *antigo = uniao;
+            uniao = cjto_uniao(antigo, (w->vet_h[i]).skills);
     }
     return uniao;
 }
