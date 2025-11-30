@@ -122,12 +122,12 @@ void avisa(struct mundo_t *w, struct evento_t *ev){
     while (cjto_card(b->presentes) < b->limite && fila_tamanho(b->espera) > 0){
         int heroi;
         fila_retira(b->espera, &heroi);
-        int teste = cjto_insere(b->presentes, w->vet_h[heroi]);
+        int teste = cjto_insere(b->presentes, heroi);
         if (teste < 0)
             return;
         if (!adiciona_evento(w, tempo, ENTRA, heroi, b->id_b))
             return;
-        printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d", tempo, b->id_b, h->id_h);
+        printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d", tempo, b->id_b, heroi);
     }
 
 }
