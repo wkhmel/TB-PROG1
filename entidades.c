@@ -91,31 +91,44 @@ struct mundo_t *cria_mundo(){
     if (!w)
         return NULL;
     w->qtd_h = N_HEROIS;
-
-    for (int i = 0; i < w->qtd_h; i++){
-        w->vet_h[i] = cria_heroi(i);
-        if (!w->vet_h[i]){
-            destroi_mundo(w);
-            return NULL;
-        }
-    }
     w->qtd_b = N_BASES;
-
-    for (int i = 0; i < w->qtd_b; i++){
-        w->vet_b[i] = cria_base(i);
-        if (!w->vet_b[i]){
-            destroi_mundo(w);
-            return NULL;
-        }
-    }
     w->qtd_m = N_MISSOES;
 
-    for (int i = 0; i < w->qtd_m; i++){
-        w->vet_m[i] = cria_missao(i);
-        if (!w->vet_m[i]){
-            destroi_mundo(w);
+    if (!w->vet_h || !w->vet_b || !w->vet_m){
+        destroi_mundo(w);
+        return NULL;
+    }   
+    
+    w->vet_h = malloc(w->qtd_h*(sizeof(struct heroi_t));
+    w->vet_b = malloc(w->qtd_b*(sizeof(struct base_t));
+    w->vet_m = malloc(w->qtd_m*(sizeof(struct missao_t));
+
+    /* preenche vetor de struct heroi_t */
+    for (int i = 0; i < w->qtd_h; i++){
+        struct heroi_t *aux = cria_heroi(i);
+        if (!aux)
             return NULL;
         }
+        w->vet_h[i] = *aux;
+        free(aux);
+    }
+
+    for (int i = 0; i < w->qtd_b; i++){
+        struct base_t *aux = cria_base(i);
+        if (!aux)
+            return NULL;
+        }
+        w->vet_b[i] = *aux;
+        free(aux);
+    }
+
+    for (int i = 0; i < w->qtd_m; i++){
+        struct missao_t *aux = cria_missao(i);
+        if (!aux)
+            return NULL;
+        }
+        w->vet_m[i] = *aux;
+        free(aux);
     }
 
     w->qtd_hab = N_HABILIDADES;
@@ -133,19 +146,32 @@ struct mundo_t *cria_mundo(){
 struct mundo_t *destroi_mundo(struct mundo_t *w){
     if (!w)
         return NULL;
-    for (int i = 0; i < w->qtd_h; i++){
-        destroi_heroi(w->vet_h[i]);
+    if (w->vet_h){
+        
+        for (int i = 0; i < w->qtd_h; i++){
+            destroi_heroi(w->vet_h[i]);
+        }
+        free(w->vet_h);
     }
 
-    for (int i = 0; i < w->qtd_b; i++){
-        destroi_base(w->vet_b[i]);
+    if (w->vet_b){
+        
+        for (int i = 0; i < w->qtd_b; i++){
+            destroi_base(w->vet_b[i]);
+        }
+        free(w->vet_b);
     }
 
-    for (int i = 0; i < w->qtd_m; i++){
-        destroi_missao(w->vet_m[i]);
+    if (w->vet_m){
+        
+        for (int i = 0; i < w->qtd_m; i++){
+            destroi_missao(w->vet_m[i]);
+        }
+        free(w->vet_m);
     }
 
-    fprio_destroi(w->lef);
+    if (w->lef)
+        fprio_destroi(w->lef);
 
     free(w);
     return NULL;
