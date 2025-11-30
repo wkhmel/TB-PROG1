@@ -91,8 +91,8 @@ void espera(struct mundo_t *w, struct evento_t *ev){
     if (!adiciona_evento(w, tempo, AVISA, h->id_h, b->id_b))
         return;
     int atual = fila_tamanho(b->espera);
-    if (atual > b->fila_max)
-        b->fila_max = atual;
+    if (atual > b->max_fila)
+        b->max_fila = atual;
     printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));    
 }
 
@@ -140,7 +140,7 @@ void entra(struct mundo_t *w, struct evento_t *ev){
     if (!verifica_mundo(w))
         return;
     int tpb = 15 + (h->paciencia)*aleat(1, 20);
-    if (!adiciona_evento(w, tempo + tbp, SAI, h->id_h, b->id_b))
+    if (!adiciona_evento(w, tempo + tpb, SAI, h->id_h, b->id_b))
         return;    
     printf("%6d: ENTRA HEROI %2d BASE %d (%2d/%2d) SAI %d\n", tempo, h->id_h, b->id_b, cjto_card(b->presentes), b->limite, tempo + tpb);
 }
@@ -306,9 +306,9 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
 
     for (int i = 0; i < N_BASES; i++){
         struct base_t *base = w->vet_b[i];
-        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->fila_max, base->missoes);
+        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->max_fila, base->missoes);
     }
-    float taxa_missoes = (w->missoes_cumpridas)/(N_MISSOES);
+    float taxa_missoes = (w->missoes_cumpridas)/((float)N_MISSOES);
     printf("EVENTOS TRATADOS: %d\n", w->total_eventos);
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", w->missoes_cumpridas, N_MISSOES, taxa_missoes);
     int max_tentativas = 0;
@@ -333,16 +333,16 @@ void ev_fim(struct mundo_t *w, struct evento_t *ev){
 
 void simula_eventos(struct mundo_t *w){
     struct evento_t *ev;
-    int tipo_evento, tempo, fim = 0;
+    int tipo_evento, tempo, fim_sim = 0;
     if (!verifica_mundo(w))
         return;
-    while (!fim && fprio_tamanho(w->lef) > 0){
+    while (!fim_sim && fprio_tamanho(w->lef) > 0){
         ev = fprio_retira(w->lef, &tipo_evento, &tempo);
         if (!ev)
             break;
         if ((tipo_evento != MISSAO) && (tipo_evento != AVISA) && (tipo_evento != FIM)){
             struct heroi_t *h = w->vet_h[ev->info1];
-            if (h->morto)
+            if (h->morto) {
                 free(ev);
                 continue;
         }
