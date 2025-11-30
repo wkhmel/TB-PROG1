@@ -1,5 +1,7 @@
-#ifndef FILA
-#define FILA
+#ifndef FILA_H
+#define FILA_H
+#include <stdio.h>
+#include <stdlib.h>
 
 // descreve um nodo da fila 
 struct fila_nodo_t
