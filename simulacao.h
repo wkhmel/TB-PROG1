@@ -2,6 +2,6 @@
 #define SIMULACAO_H
 #include "entidades.h"
 
-void simular_eventos(struct mundo_t *m);
+void simula_eventos(struct mundo_t *m);
 
 #endif
