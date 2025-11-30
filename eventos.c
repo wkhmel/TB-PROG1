@@ -1,4 +1,4 @@
-#include <stdio.h>
+6#include <stdio.h>
 #include <stdlib.h>
 #include "eventos.h"
 #include "theboys.h"
@@ -33,6 +33,31 @@ int adiciona_evento(struct mundo_t *w, int tempo, int tipo, int info1, int info2
 
 int verifica_mundo(struct mundo_t *w){
     if (!w || !w->vet_h || !w->vet_b || !w->vet_m)
+        return 0;
+    return 1;
+}
+
+int inicia_eventos(struct mundo_t *m){
+    int base, tempo; 
+    if (!verifica_mundo)
+        return 0;
+/* chegada dos herois */
+    for (int i = 0; i < w->qtd_h; i++){
+        base = aleat(0, w->qtd_b - 1);
+        tempo = aleat(0, 4320);
+        if (!(adiciona_evento(w, tempo, CHEGA, (w->vet_h[i])->id_h, base)))
+            return 0;
+    }
+
+/* agendamento das missoes */
+    for (int i = 0; i < w->qtd_m; i++){
+        tempo = aleat(0, T_FIM_DO_MUNDO);
+        if (!(adiciona_evento(w, tempo, MISSAO, (w->vet_m[i])->id_m, -1)))
+            return 0;
+    }
+
+/* agendamento do fim do mundo */
+    if (!adiciona_evento(w, T_FIM_DO_MUNDO, FIM, -1, -1);
         return 0;
     return 1;
 }
