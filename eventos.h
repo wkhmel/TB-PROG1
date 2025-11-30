@@ -70,6 +70,9 @@ void evento_missao(struct mundo_t *m, struct evento_t *ev);
 /* retorna o tempo atual do mundo */
 int tempo_mundo(struct mundo_t *w)
 
+/* diz se o heroi morreu ou nao, mantendo a struct opaca na simulacao */
+int morte_heroi(struct mundo_t *w, struct evento_t *ev);
+
 /* representa o fim da simulacao */
 void fim(struct mundo_t *m, struct evento_t *ev);
 
