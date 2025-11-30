@@ -313,8 +313,8 @@ void ev_fim(struct mundo_t *w){
             printf("HEROI %2d MORTO ", i);
         else
             printf("HEROI %2d VIVO ", i);
-        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (h.paciencia, h.speed, h.exp);
-        cjto_imprime(h.skills);
+        printf("PAC %3d VEL %4d EXP %4d HABS [ ", (h->paciencia, h->speed, h->exp);
+        cjto_imprime(h->skills);
         printf(" ]\n");
     }
 
