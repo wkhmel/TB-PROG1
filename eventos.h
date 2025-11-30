@@ -19,9 +19,15 @@
 #include "fila.h"
 #include "ferramentas.h"
 
-/* eventos que causarao as mudancas de estado na simulacao discreta */
-/* tem varios tipos, so mudando a informacao passada em info1 e info2 */
-struct evento_t;
+/* representa um evento com todas as informacoes possiveis, as quais */
+/* podem ser utilizadas ou nao. */
+/* causara mudancas de estado na simulacao discreta. */
+struct evento_t{
+    int tempo;
+    int tipo;
+    int info1;
+    int info2; 
+};
 
 /* adiciona um novo evento, retornando 1 em sucesso e 0 em falha */
 int adiciona_evento(struct mundo_t *w, int tempo, int tipo, int info1, int info2);
