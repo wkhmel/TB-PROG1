@@ -1,5 +1,5 @@
-#ifndef ENTIDADES
-#define ENTIDADES
+#ifndef ENTIDADES_H
+#define ENTIDADES_H
 #include "fprio.h"
 #include "conjunto.h"
 #include "fila.h"
