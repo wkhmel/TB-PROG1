@@ -1,4 +1,4 @@
-6#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "eventos.h"
 #include "theboys.h"
