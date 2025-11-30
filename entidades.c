@@ -96,6 +96,7 @@ void espera(struct mundo_t *w, struct evento_t *ev){
     printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, h->id_h, b->id_b, fila_tamanho(b->espera));   
 }
 
+
 /* representa a desistencia de um heroi em esperar para entrar em uma base, e em seguida esse heroi viaja para uma base aleatoria D */
 void desiste(struct mundo_t *w, struct evento_t *ev){
     struct heroi_t *h = w->vet_h[ev->info1];
