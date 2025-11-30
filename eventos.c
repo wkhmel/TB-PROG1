@@ -11,14 +11,14 @@
 int adiciona_evento(struct mundo_t *w, int tempo, int tipo, int info1, int info2){
     struct evento_t *ev = malloc(sizeof(struct evento_t));
     if (!ev)
-        return -1;
+        return 0;
     ev->tempo = tempo;
     ev->tipo = tipo;
     ev->info1 = info1;
     ev->info2 = info2;
     int teste = fprio_insere(w->lef, ev, tipo, tempo);
     if (teste < 0)
-        return -1;
+        return 0;
     return 1;
 }
 
