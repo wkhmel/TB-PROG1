@@ -272,13 +272,24 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         }
         return;
     }
-    if ((w->qtd_v > 0) && (tempo%2500 == 0)){
-        w->qtd_v--;
-        m->realizou = true;
-        adiciona_evento(w, tempo, MORRE, maior_xp(w, 0), 0);
-        return;
+    /* usar Composto V na base mais próxima (dist[0].id) */
+    if ((w->qtd_v > 0) && (tempo % 2500 == 0)){
+        int b_proxima = dist[0].id; /* pega a base mais perto da missao */
+        int heroi_sacrificado = maior_xp(w, b_proxima); /* procura heroi nela */
+        if (heroi_sacrificado != -1) { /* consome se tiver um heroi para usar */
+            w->qtd_v--;
+            m->realizou = true;
+            w->missoes_cumpridas++; /* missao cumprida */
+            /* agenda a morte do heroi */
+            adiciona_evento(w, tempo, MORRE, heroi_sacrificado, m->id_m);
+            for (int j = 0; j < w->qtd_h; j++){
+                if (cjto_pertence(w->vet_b[b_proxima].presentes, j))
+                    (w->vet_h[j]).exp++;
+            }
+            printf("%6d: MISSAO %d CUMPRIDA BASE %d COMPOSTO V HEROI %d\n", tempo, m->id_m, base_mais_proxima, heroi_sacrificado);
+            return;
+        }
     }
-
     printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, m->id_m);
     /* coloca na agenda de novo */
     if (!adiciona_evento(w, tempo + 24*60, MISSAO, m->id_m, -1))
