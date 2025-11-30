@@ -293,7 +293,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
 
 int tempo_mundo(struct mundo_t *w){
     if (!w)
-        return 0;
+        return -1;
     return w->tempo;
 }
 
