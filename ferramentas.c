@@ -2,16 +2,6 @@
 #include <math.h>
 #include "ferramentas.h"
 
-struct coord_t{
-    int x;
-    int y;
-};
-
-struct dist_base{
-    int id;
-    int distancia;
-};
-
 // (max - min + 1) gera um número entre 0 e (max - min)
 // Somando min, temos o deslocamento do resultado para o intervalo [min, max]
 long aleat(long min, long max)
