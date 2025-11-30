@@ -38,6 +38,6 @@ struct missao_t *destroi_missao(struct missao_t *m);
 
 struct mundo_t *cria_mundo();
 
-struct missao_t *destroi_mundo(struct mundo_t *w);
+struct mundo_t *destroi_mundo(struct mundo_t *w);
 
 #endif
