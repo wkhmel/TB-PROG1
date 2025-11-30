@@ -302,7 +302,7 @@ void ev_fim(struct mundo_t *w){
     }
 
     for (int i = 0; i < N_BASES; i++){
-        struct base_t *base = w->vet_b[i];
+        struct base_t *base = &w->vet_b[i];
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", i, base->limite, base->max_fila, base->missoes);
     }
     float taxa_missoes = (float)(w->missoes_cumpridas)/(N_MISSOES);
