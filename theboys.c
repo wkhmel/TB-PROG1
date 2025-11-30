@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "entidades.h"
 #include "simulacao.h"
-#include "ferramentas.h"
 #include "eventos.h"
 #include "fprio.h"
 
@@ -18,7 +17,6 @@ int main ()
   w = cria_mundo();
   while (verifica_tempo(w)){
     inicia_eventos(w);
-    atualiza_tempo(w, ev);
     simula_eventos(w);
     destroi_evento(ev);
   }
