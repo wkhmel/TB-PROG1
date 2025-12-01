@@ -402,8 +402,8 @@ void simula_eventos(struct mundo_t *w){
         if ((tipo_evento != MISSAO) && (tipo_evento != AVISA) && (tipo_evento != FIM)){
             struct heroi_t *h = &w->vet_h[ev->info1];
             if (h->morto){
-                free(ev);
                 printf("Erro: o heroi %d ja morreu\n", ev->info1);
+                free(ev);
                 continue; /* termina o loop antes porque esse evento nao pode acontecer */
             }
         }
