@@ -11,8 +11,10 @@
 struct heroi_t *cria_heroi(int id){
     struct heroi_t *h;
     h = malloc(sizeof(struct heroi_t));
-    if (!h)
+    if (!h){
+        printf("Erro: heroi nao alocado\n");
         return NULL;
+    }
     h->id_h = id;
     h->skills = cjto_aleat(aleat(1, 3), N_HABILIDADES);
     h->paciencia = aleat(0, 100);
@@ -37,8 +39,10 @@ struct heroi_t *destroi_heroi(struct heroi_t *h){
 struct base_t *cria_base(int id){
     struct base_t *b;
     b = malloc(sizeof(struct base_t));
-    if (!b)
+    if (!b){
+        printf("Erro: base nao alocada\n");
         return NULL;
+    }
     b->id_b = id;
     b->limite = aleat(3, 10);
     b->presentes = cjto_cria(N_HEROIS); /* cria conjunto vazio com capacidade para ate N_HEROIS */
@@ -66,8 +70,10 @@ struct base_t *destroi_base(struct base_t *b){
 struct missao_t *cria_missao(int id){
     struct missao_t *m;
     m = malloc(sizeof(struct missao_t));
-    if (!m)
+    if (!m){
+        printf("Erro: missao nao alocada\n");
         return NULL;
+    }
     m->id_m = id;
     /* cria um cjto aleatorio de habilidades, que pode ter de 6 a 10 e */
     /* eh selecionado entre todas as 10 habilidades do mundo */
@@ -92,8 +98,10 @@ struct missao_t *destroi_missao(struct missao_t *m){
 struct mundo_t *cria_mundo(){
     struct mundo_t *w;
     w = malloc(sizeof(struct mundo_t));
-    if (!w)
+    if (!w){
+        printf("Erro: mundo nao alocado\n");
         return NULL;
+    }
     w->qtd_h = N_HEROIS;
     w->qtd_b = N_BASES;
     w->qtd_m = N_MISSOES;
