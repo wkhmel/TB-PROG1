@@ -278,10 +278,10 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
             }
         }
         printf("%6d: MISSAO %d UNIAO HAB BASE %d: [ ", tempo, m->id_m, id_base);
-        struct cjto_t *uni_s = skills_b(w, i);
+        struct cjto_t *uni_s = skills_b(w, id_base);
         cjto_imprime(uni_s);
-        cjto_destroi(uni_s);
         printf(" ]\n");
+        cjto_destroi(uni_s);
     }    
     
     printf("%6d: MISSAO %d TENT %d HAB REQ: [ ", tempo, m->id_m, m->tentativas);
