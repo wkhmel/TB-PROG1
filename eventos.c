@@ -253,19 +253,24 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     struct missao_t *m = &w->vet_m[ev->info1];
     struct dist_base dist[N_BASES]; /* struct de distancia de cada base ate a missao */
     int tempo = ev->tempo;    
-    if (!verifica_mundo(w)) || m->realizou)
+    if (!verifica_mundo(w) || m->realizou)
         return;
     m->tentativas++;
     /* verifica a distancia de cada base em relacao ao local da missao */
     for (int i = 0; i < N_BASES; i++){
         dist[i].id = i;
         dist[i].distancia = dist_coord(m->local, (w->vet_b[i]).local);
+    }
+    ordena_dist(dist, N_BASES);
+    int base_missao = -1;
+
+    for (int i = 0; i < N_BASES; i++){
         /* prints de depuracao do evento missao */
         printf("%6d: MISSAO %d BASE %d DIST %d HEROIS [ ", tempo, m->id_m, i, dist[i].distancia);
         cjto_imprime(w->vet_b[i].presentes);
         printf(" ]\n");
         for (int j = 0; j < N_HEROIS; j++){
-            if cjto_pertence(w->vet_b[i].presentes, j){
+            if (cjto_pertence(w->vet_b[i].presentes, j)){
                 printf(" %6d: MISSAO %d HAB HEROI %2d: [ ", tempo, m->id_m, j);
                 cjto_imprime(w->vet_h[j].skills);
                 printf(" ]\n");
@@ -274,9 +279,7 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
         printf("%6d: MISSAO %d UNIAO HAB BASE %d: [ ", tempo, m->id_m, i);
         cjto_imprime(skills_b(w, i));
         printf(" ]\n"); 
-    }
-    ordena_dist(dist, N_BASES);
-    int base_missao = -1;
+    }    
     
     printf("%6d: MISSAO %d TENT %d HAB REQ: [ ", tempo, m->id_m, m->tentativas);
     cjto_imprime(m->skills);
