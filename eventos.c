@@ -263,20 +263,21 @@ void evento_missao(struct mundo_t *w, struct evento_t *ev){
     }
     ordena_dist(dist, N_BASES);
     int base_missao = -1;
-
+    int id_base;
     for (int i = 0; i < N_BASES; i++){
         /* prints de depuracao do evento missao */
-        printf("%6d: MISSAO %d BASE %d DIST %d HEROIS [ ", tempo, m->id_m, i, dist[i].distancia);
-        cjto_imprime(w->vet_b[i].presentes);
+        id_base = dist[i].id;
+        printf("%6d: MISSAO %d BASE %d DIST %d HEROIS [ ", tempo, m->id_m, id_base, dist[i].distancia);
+        cjto_imprime(w->vet_b[id_base].presentes);
         printf(" ]\n");
         for (int j = 0; j < N_HEROIS; j++){
-            if (cjto_pertence(w->vet_b[i].presentes, j)){
+            if (cjto_pertence(w->vet_b[id_base].presentes, j)){
                 printf(" %6d: MISSAO %d HAB HEROI %2d: [ ", tempo, m->id_m, j);
                 cjto_imprime(w->vet_h[j].skills);
                 printf(" ]\n");
             }
         }
-        printf("%6d: MISSAO %d UNIAO HAB BASE %d: [ ", tempo, m->id_m, i);
+        printf("%6d: MISSAO %d UNIAO HAB BASE %d: [ ", tempo, m->id_m, id_base);
         struct cjto_t *uni_s = skills_b(w, i);
         cjto_imprime(uni_s);
         cjto_destroi(uni_s);
